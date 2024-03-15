@@ -1,0 +1,6 @@
+framework module Pods_NavigateU {
+  umbrella header "Pods-NavigateU-umbrella.h"
+
+  export *
+  module * { export * }
+}
