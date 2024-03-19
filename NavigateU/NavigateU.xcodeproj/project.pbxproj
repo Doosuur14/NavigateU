@@ -9,10 +9,16 @@
 /* Begin PBXBuildFile section */
 		DEF356E02BA448A700FD27EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF356DF2BA448A700FD27EC /* AppDelegate.swift */; };
 		DEF356E22BA448A700FD27EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF356E12BA448A700FD27EC /* SceneDelegate.swift */; };
-		DEF356E42BA448A700FD27EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF356E32BA448A700FD27EC /* ViewController.swift */; };
+		DEF356E42BA448A700FD27EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF356E32BA448A700FD27EC /* LoginViewController.swift */; };
 		DEF356E92BA448A900FD27EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEF356E82BA448A900FD27EC /* Assets.xcassets */; };
 		DEF356EC2BA448A900FD27EC /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DEF356EB2BA448A900FD27EC /* Base */; };
 		DEF356F52BA4595700FD27EC /* swiftlint-2.yml in Resources */ = {isa = PBXBuildFile; fileRef = DEF356F42BA4595700FD27EC /* swiftlint-2.yml */; };
+		DEF356FC2BA618F400FD27EC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF356FB2BA618F400FD27EC /* LoginViewModel.swift */; };
+		DEF357012BA61BCA00FD27EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357002BA61BCA00FD27EC /* User.swift */; };
+		DEF357032BA6214A00FD27EC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357022BA6214A00FD27EC /* LoginView.swift */; };
+		DEF357072BA78ECA00FD27EC /* HomeDesignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357062BA78ECA00FD27EC /* HomeDesignView.swift */; };
+		DEF357092BA78EE700FD27EC /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357082BA78EE700FD27EC /* HomeScreenViewController.swift */; };
+		DEF3570B2BA78EFD00FD27EC /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3570A2BA78EFD00FD27EC /* HomeScreenView.swift */; };
 		F31BC182647B47C9DDAF7049 /* Pods_NavigateU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5148FBA7DF920FD03AFF84A8 /* Pods_NavigateU.framework */; };
 /* End PBXBuildFile section */
 
@@ -22,11 +28,17 @@
 		DEF356DC2BA448A700FD27EC /* NavigateU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigateU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEF356DF2BA448A700FD27EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEF356E12BA448A700FD27EC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DEF356E32BA448A700FD27EC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DEF356E32BA448A700FD27EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DEF356E82BA448A900FD27EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEF356EB2BA448A900FD27EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEF356ED2BA448A900FD27EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEF356F42BA4595700FD27EC /* swiftlint-2.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "swiftlint-2.yml"; sourceTree = "<group>"; };
+		DEF356FB2BA618F400FD27EC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		DEF357002BA61BCA00FD27EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DEF357022BA6214A00FD27EC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DEF357062BA78ECA00FD27EC /* HomeDesignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDesignView.swift; sourceTree = "<group>"; };
+		DEF357082BA78EE700FD27EC /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
+		DEF3570A2BA78EFD00FD27EC /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		E97002346D4B3FD5965E70A0 /* Pods-NavigateU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigateU.release.xcconfig"; path = "Target Support Files/Pods-NavigateU/Pods-NavigateU.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,13 +94,51 @@
 			children = (
 				DEF356DF2BA448A700FD27EC /* AppDelegate.swift */,
 				DEF356E12BA448A700FD27EC /* SceneDelegate.swift */,
-				DEF356E32BA448A700FD27EC /* ViewController.swift */,
+				DEF357042BA78E6400FD27EC /* HomeScreen */,
+				DEF356F62BA617A400FD27EC /* LoginScreen */,
+				DEF357052BA78E6E00FD27EC /* RegistrationScreen */,
+				DEF356FF2BA61BB100FD27EC /* Model */,
 				DEF356E82BA448A900FD27EC /* Assets.xcassets */,
 				DEF356EA2BA448A900FD27EC /* LaunchScreen.storyboard */,
 				DEF356F42BA4595700FD27EC /* swiftlint-2.yml */,
 				DEF356ED2BA448A900FD27EC /* Info.plist */,
 			);
 			path = NavigateU;
+			sourceTree = "<group>";
+		};
+		DEF356F62BA617A400FD27EC /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DEF356E32BA448A700FD27EC /* LoginViewController.swift */,
+				DEF356FB2BA618F400FD27EC /* LoginViewModel.swift */,
+				DEF357022BA6214A00FD27EC /* LoginView.swift */,
+			);
+			path = LoginScreen;
+			sourceTree = "<group>";
+		};
+		DEF356FF2BA61BB100FD27EC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DEF357002BA61BCA00FD27EC /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DEF357042BA78E6400FD27EC /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DEF357062BA78ECA00FD27EC /* HomeDesignView.swift */,
+				DEF357082BA78EE700FD27EC /* HomeScreenViewController.swift */,
+				DEF3570A2BA78EFD00FD27EC /* HomeScreenView.swift */,
+			);
+			path = HomeScreen;
+			sourceTree = "<group>";
+		};
+		DEF357052BA78E6E00FD27EC /* RegistrationScreen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RegistrationScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,8 +275,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEF356E42BA448A700FD27EC /* ViewController.swift in Sources */,
+				DEF356E42BA448A700FD27EC /* LoginViewController.swift in Sources */,
+				DEF357092BA78EE700FD27EC /* HomeScreenViewController.swift in Sources */,
 				DEF356E02BA448A700FD27EC /* AppDelegate.swift in Sources */,
+				DEF3570B2BA78EFD00FD27EC /* HomeScreenView.swift in Sources */,
+				DEF357032BA6214A00FD27EC /* LoginView.swift in Sources */,
+				DEF357012BA61BCA00FD27EC /* User.swift in Sources */,
+				DEF356FC2BA618F400FD27EC /* LoginViewModel.swift in Sources */,
+				DEF357072BA78ECA00FD27EC /* HomeDesignView.swift in Sources */,
 				DEF356E22BA448A700FD27EC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
