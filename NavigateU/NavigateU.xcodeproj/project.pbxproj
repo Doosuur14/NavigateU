@@ -19,6 +19,11 @@
 		DEF357072BA78ECA00FD27EC /* HomeDesignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357062BA78ECA00FD27EC /* HomeDesignView.swift */; };
 		DEF357092BA78EE700FD27EC /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357082BA78EE700FD27EC /* HomeScreenViewController.swift */; };
 		DEF3570B2BA78EFD00FD27EC /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3570A2BA78EFD00FD27EC /* HomeScreenView.swift */; };
+		DEF3570E2BAA117B00FD27EC /* RegistrationScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3570D2BAA117B00FD27EC /* RegistrationScreenView.swift */; };
+		DEF357102BAA119200FD27EC /* RegistrationScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3570F2BAA119200FD27EC /* RegistrationScreenViewController.swift */; };
+		DEF357182BACD5F700FD27EC /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357172BACD5F700FD27EC /* MainScreenViewController.swift */; };
+		DEF3571A2BACD60900FD27EC /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF357192BACD60900FD27EC /* MainScreenView.swift */; };
+		DEF3571F2BACE82700FD27EC /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF3571E2BACE82700FD27EC /* UserService.swift */; };
 		F31BC182647B47C9DDAF7049 /* Pods_NavigateU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5148FBA7DF920FD03AFF84A8 /* Pods_NavigateU.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +44,11 @@
 		DEF357062BA78ECA00FD27EC /* HomeDesignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDesignView.swift; sourceTree = "<group>"; };
 		DEF357082BA78EE700FD27EC /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		DEF3570A2BA78EFD00FD27EC /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
+		DEF3570D2BAA117B00FD27EC /* RegistrationScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationScreenView.swift; sourceTree = "<group>"; };
+		DEF3570F2BAA119200FD27EC /* RegistrationScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationScreenViewController.swift; sourceTree = "<group>"; };
+		DEF357172BACD5F700FD27EC /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
+		DEF357192BACD60900FD27EC /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		DEF3571E2BACE82700FD27EC /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		E97002346D4B3FD5965E70A0 /* Pods-NavigateU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigateU.release.xcconfig"; path = "Target Support Files/Pods-NavigateU/Pods-NavigateU.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,15 +102,15 @@
 		DEF356DE2BA448A700FD27EC /* NavigateU */ = {
 			isa = PBXGroup;
 			children = (
-				DEF356DF2BA448A700FD27EC /* AppDelegate.swift */,
-				DEF356E12BA448A700FD27EC /* SceneDelegate.swift */,
+				DEF357162BACD58300FD27EC /* Resources */,
 				DEF357042BA78E6400FD27EC /* HomeScreen */,
 				DEF356F62BA617A400FD27EC /* LoginScreen */,
 				DEF357052BA78E6E00FD27EC /* RegistrationScreen */,
+				DEF3570C2BAA114C00FD27EC /* MainScreen */,
+				DEF3571B2BACE7D800FD27EC /* UserService */,
 				DEF356FF2BA61BB100FD27EC /* Model */,
 				DEF356E82BA448A900FD27EC /* Assets.xcassets */,
 				DEF356EA2BA448A900FD27EC /* LaunchScreen.storyboard */,
-				DEF356F42BA4595700FD27EC /* swiftlint-2.yml */,
 				DEF356ED2BA448A900FD27EC /* Info.plist */,
 			);
 			path = NavigateU;
@@ -137,8 +147,37 @@
 		DEF357052BA78E6E00FD27EC /* RegistrationScreen */ = {
 			isa = PBXGroup;
 			children = (
+				DEF3570D2BAA117B00FD27EC /* RegistrationScreenView.swift */,
+				DEF3570F2BAA119200FD27EC /* RegistrationScreenViewController.swift */,
 			);
 			path = RegistrationScreen;
+			sourceTree = "<group>";
+		};
+		DEF3570C2BAA114C00FD27EC /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DEF357172BACD5F700FD27EC /* MainScreenViewController.swift */,
+				DEF357192BACD60900FD27EC /* MainScreenView.swift */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		DEF357162BACD58300FD27EC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DEF356F42BA4595700FD27EC /* swiftlint-2.yml */,
+				DEF356DF2BA448A700FD27EC /* AppDelegate.swift */,
+				DEF356E12BA448A700FD27EC /* SceneDelegate.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DEF3571B2BACE7D800FD27EC /* UserService */ = {
+			isa = PBXGroup;
+			children = (
+				DEF3571E2BACE82700FD27EC /* UserService.swift */,
+			);
+			path = UserService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,15 +314,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEF3571F2BACE82700FD27EC /* UserService.swift in Sources */,
 				DEF356E42BA448A700FD27EC /* LoginViewController.swift in Sources */,
 				DEF357092BA78EE700FD27EC /* HomeScreenViewController.swift in Sources */,
 				DEF356E02BA448A700FD27EC /* AppDelegate.swift in Sources */,
+				DEF3570E2BAA117B00FD27EC /* RegistrationScreenView.swift in Sources */,
 				DEF3570B2BA78EFD00FD27EC /* HomeScreenView.swift in Sources */,
+				DEF357182BACD5F700FD27EC /* MainScreenViewController.swift in Sources */,
 				DEF357032BA6214A00FD27EC /* LoginView.swift in Sources */,
 				DEF357012BA61BCA00FD27EC /* User.swift in Sources */,
 				DEF356FC2BA618F400FD27EC /* LoginViewModel.swift in Sources */,
+				DEF357102BAA119200FD27EC /* RegistrationScreenViewController.swift in Sources */,
 				DEF357072BA78ECA00FD27EC /* HomeDesignView.swift in Sources */,
 				DEF356E22BA448A700FD27EC /* SceneDelegate.swift in Sources */,
+				DEF3571A2BACD60900FD27EC /* MainScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
