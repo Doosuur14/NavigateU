@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeDesignView: UIView {
+final class HomeDesignView: UIView {
 
     lazy var appName: UILabel = UILabel()
     lazy var slogan: UILabel = UILabel()
@@ -19,6 +19,14 @@ class HomeDesignView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setUpFunctions()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpFunctions() {
         setUpAppName()
         setSlogan()
         setSlogan2()
@@ -28,9 +36,6 @@ class HomeDesignView: UIView {
         setUpConditions()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     private func setUpAppName() {
         addSubview(appName)
@@ -65,7 +70,6 @@ class HomeDesignView: UIView {
             make.top.equalTo(slogan.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(100)
             make.centerX.equalToSuperview()
-           // make.centerX.equalTo(slogan.snp.centerX).offset(5)
         }
     }
 
@@ -73,8 +77,6 @@ class HomeDesignView: UIView {
         addSubview(getStarted)
         getStarted.setTitle("Get Started", for: .normal)
         getStarted.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        getStarted.isEnabled = true
-        getStarted.isUserInteractionEnabled = true
         getStarted.backgroundColor = UIColor(named: "CustomColor")
         getStarted.clipsToBounds = true
         getStarted.layer.cornerRadius = 10
@@ -117,7 +119,6 @@ class HomeDesignView: UIView {
 
     private func setUpConditions() {
         addSubview(conditions)
-
         let attributedString = NSMutableAttributedString(string: "Terms of Service and Privacy Policy")
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
         conditions.attributedText = attributedString

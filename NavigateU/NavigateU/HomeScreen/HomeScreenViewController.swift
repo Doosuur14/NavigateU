@@ -15,17 +15,20 @@ class HomeScreenViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         homeScreenView?.secondView.getStarted.addTarget(self, action: #selector(getStartedButtonTapped), for: .touchUpInside)
-
-        navigationItem.hidesBackButton = true
+        homeScreenView?.secondView.alreadyRegistered.addTarget(self, action: #selector(alreadyHaveAcct), for: .touchUpInside)
     }
     private func setUpView() {
         homeScreenView = HomeScreenView(frame: view.bounds)
         view = homeScreenView
     }
-    
    @objc private func getStartedButtonTapped() {
-       print("Button tapped")
-        let viewController = LoginViewController()
+        let viewController = RegistrationScreenViewController()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+
+    @objc private func alreadyHaveAcct() {
+        let viewController = LoginViewController()
+         self.navigationController?.pushViewController(viewController, animated: true)
+     }
+
 }

@@ -14,12 +14,17 @@ class HomeScreenView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpBackgroundImage()
-        setUpSecondView()
+        setUpFunctions()
+
 
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpFunctions() {
+        setUpBackgroundImage()
+        setUpSecondView()
     }
 
     private func setUpBackgroundImage() {
@@ -44,7 +49,5 @@ class HomeScreenView: UIView {
             make.leading.equalToSuperview()
             make.height.equalTo(300)
         }
-
     }
-
 }

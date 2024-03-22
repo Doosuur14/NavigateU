@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class LoginView: UIView {
+final class LoginView: UIView {
 
     lazy var appName: UILabel = UILabel()
     lazy var email: UITextField = UITextField()
@@ -22,6 +22,14 @@ class LoginView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setUpFunctions()
+
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpFunctions() {
         setUpAppName()
         setUpEmail()
         setUpPassword()
@@ -32,9 +40,6 @@ class LoginView: UIView {
         setUpTerms()
         setUpConditions()
     }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     private func setUpAppName() {
         addSubview(appName)
@@ -44,7 +49,6 @@ class LoginView: UIView {
         appName.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-10)
             make.centerX.equalToSuperview()
-           // make.leading.equalToSuperview().offset(130)
         }
     }
 
