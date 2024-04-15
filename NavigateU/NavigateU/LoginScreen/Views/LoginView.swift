@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import SnapKit
 
-class LoginView: UIView {
+final class LoginView: UIView {
 
     lazy var appName: UILabel = UILabel()
     lazy var email: UITextField = UITextField()
@@ -22,21 +21,26 @@ class LoginView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpAppName()
-        setUpEmail()
-        setUpPassword()
-        setUpLoginButton()
-        setUpRedirect()
-        setUpGoogle()
-        setUpGoogleImage()
-        setUpTerms()
-        setUpConditions()
+        setUpFunctions()
+
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setUpAppName() {
+    private func setUpFunctions() {
+        setupAppName()
+        setupEmail()
+        setupPassword()
+        setupLoginButton()
+        setupRedirect()
+        setupGoogle()
+        setupGoogleImage()
+        setupTerms()
+        setupConditions()
+    }
+
+    private func setupAppName() {
         addSubview(appName)
         appName.text = "NavigateU"
         appName.font = UIFont.systemFont(ofSize: 30, weight: .medium)
@@ -44,15 +48,15 @@ class LoginView: UIView {
         appName.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-10)
             make.centerX.equalToSuperview()
-           // make.leading.equalToSuperview().offset(130)
         }
     }
 
-    private func setUpEmail() {
+    private func setupEmail() {
         addSubview(email)
         email.placeholder = "Email"
         email.backgroundColor = .clear
         email.borderStyle = .roundedRect
+        email.autocapitalizationType = .none
         email.textColor = UIColor(named: "SubtitleColor")
         email.snp.makeConstraints { make in
             make.top.equalTo(appName.snp.bottom).offset(70)
@@ -62,7 +66,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpPassword() {
+    private func setupPassword() {
         addSubview(password)
         password.placeholder = "Password"
         password.backgroundColor = .clear
@@ -76,7 +80,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpLoginButton() {
+    private func setupLoginButton() {
         addSubview(login)
         login.setTitle("Login", for: .normal)
         login.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -92,7 +96,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpRedirect() {
+    private func setupRedirect() {
         addSubview(redirect)
         redirect.text = "or"
         redirect.textColor = UIColor(named: "SubtitleColor")
@@ -103,7 +107,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpGoogle() {
+    private func setupGoogle() {
         addSubview(continueWithGoogle)
         continueWithGoogle.setTitle("Continue With Google", for: .normal)
         continueWithGoogle.setTitleColor(.color3, for: .normal)
@@ -121,7 +125,7 @@ class LoginView: UIView {
 
     }
 
-    private func setUpTerms() {
+    private func setupTerms() {
         addSubview(termsAndConditions)
         termsAndConditions.text = "By continuing, you agree to Navigate U’s"
         termsAndConditions.textColor = UIColor(named: "SubtitileColor")
@@ -132,7 +136,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpConditions() {
+    private func setupConditions() {
         addSubview(conditions)
 
         let attributedString = NSMutableAttributedString(string: "Terms of Service and Privacy Policy")
@@ -147,7 +151,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpGoogleImage() {
+    private func setupGoogleImage() {
         addSubview(googleImage)
         googleImage.image = UIImage(named: "googleimage")
         googleImage.alpha = 0.5

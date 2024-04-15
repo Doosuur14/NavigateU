@@ -6,33 +6,42 @@
 //
 
 import UIKit
+import SnapKit
 
-class HomeDesignView: UIView {
+final class HomeDesignView: UIView {
 
-    lazy var appName: UILabel = UILabel()
-    lazy var slogan: UILabel = UILabel()
-    lazy var slogan2: UILabel = UILabel()
+    var alreadyRegisteredaction: (() -> Void)?
+    var getStartedButtonAction: (() -> Void)?
+    private lazy var appName: UILabel = UILabel()
+    private lazy var slogan: UILabel = UILabel()
+    private lazy var slogan2: UILabel = UILabel()
     lazy var getStarted: UIButton = UIButton()
     lazy var alreadyRegistered: UIButton = UIButton()
-    lazy var terms: UILabel = UILabel()
-    lazy var conditions: UILabel = UILabel()
+    private lazy var terms: UILabel = UILabel()
+    private lazy var conditions: UILabel = UILabel()
+
+
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpAppName()
-        setSlogan()
-        setSlogan2()
-        setUpGetstartedButton()
-        setUpAlreadyReg()
-        setUpTerms()
-        setUpConditions()
+        setUpFunctions()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setUpAppName() {
+    private func setUpFunctions() {
+        setupAppName()
+        setFirstSloganLabel()
+        setSecondSloganLabel()
+        setupGetstartedButton()
+        setupAlreadyReg()
+        setupTerms()
+        setupConditions()
+    }
+
+    private func setupAppName() {
         addSubview(appName)
         appName.text = "NavigateU"
         appName.font = UIFont.systemFont(ofSize: 30, weight: .regular)
@@ -44,7 +53,7 @@ class HomeDesignView: UIView {
         }
     }
 
-    private func setSlogan() {
+    private func setFirstSloganLabel() {
         addSubview(slogan)
         slogan.text = "We make settling down as"
         slogan.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -56,7 +65,7 @@ class HomeDesignView: UIView {
         }
     }
 
-    private func setSlogan2() {
+    private func setSecondSloganLabel() {
         addSubview(slogan2)
         slogan2.text = "foreign student in Russia easier!"
         slogan2.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -65,19 +74,20 @@ class HomeDesignView: UIView {
             make.top.equalTo(slogan.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(100)
             make.centerX.equalToSuperview()
-           // make.centerX.equalTo(slogan.snp.centerX).offset(5)
         }
     }
 
-    private func setUpGetstartedButton() {
+    private func setupGetstartedButton() {
         addSubview(getStarted)
         getStarted.setTitle("Get Started", for: .normal)
         getStarted.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        getStarted.isEnabled = true
-        getStarted.isUserInteractionEnabled = true
         getStarted.backgroundColor = UIColor(named: "CustomColor")
         getStarted.clipsToBounds = true
         getStarted.layer.cornerRadius = 10
+        let action = UIAction {  [weak self] _ in
+            self?.getStartedButtonAction?()
+        }
+        getStarted.addAction(action, for: .touchUpInside)
         getStarted.snp.makeConstraints { make in
             make.top.equalTo(slogan2.snp.bottom).offset(50)
             make.leading.equalToSuperview().offset(16)
@@ -86,7 +96,7 @@ class HomeDesignView: UIView {
     }
 }
 
-    private func setUpAlreadyReg() {
+    private func setupAlreadyReg() {
         addSubview(alreadyRegistered)
         alreadyRegistered.setTitle("I already have an account", for: .normal)
         alreadyRegistered.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -95,6 +105,10 @@ class HomeDesignView: UIView {
         alreadyRegistered.backgroundColor = UIColor(named: "Color2")
         alreadyRegistered.clipsToBounds = true
         alreadyRegistered.layer.cornerRadius = 10
+        let action = UIAction { [weak self] _ in
+            self?.alreadyRegisteredaction?()
+        }
+        alreadyRegistered.addAction(action, for: .touchUpInside)
         alreadyRegistered.snp.makeConstraints { make in
             make.top.equalTo(getStarted.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(16)
@@ -103,7 +117,7 @@ class HomeDesignView: UIView {
         }
     }
 
-    private func setUpTerms() {
+    private func setupTerms() {
         addSubview(terms)
         terms.text = "By continuing, you agree to Navigate U’s"
         terms.textColor = UIColor(named: "SubtitileColor")
@@ -115,9 +129,8 @@ class HomeDesignView: UIView {
         }
     }
 
-    private func setUpConditions() {
+    private func setupConditions() {
         addSubview(conditions)
-
         let attributedString = NSMutableAttributedString(string: "Terms of Service and Privacy Policy")
         attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
         conditions.attributedText = attributedString

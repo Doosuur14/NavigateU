@@ -7,19 +7,29 @@
 
 import UIKit
 
-class HomeScreenView: UIView {
+protocol HomeScreenDelegate: AnyObject {
+    func pressedGetStartedButton()
+    func pressedRegistrateredButton()
+}
 
+final class HomeScreenView: UIView {
+
+    weak var delegate: HomeScreenDelegate?
     lazy var backgroundImage: UIImageView = UIImageView()
     let secondView = HomeDesignView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpBackgroundImage()
-        setUpSecondView()
-
+        setUpFunctions()
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpFunctions() {
+        setUpBackgroundImage()
+        setUpSecondView()
     }
 
     private func setUpBackgroundImage() {
@@ -44,7 +54,5 @@ class HomeScreenView: UIView {
             make.leading.equalToSuperview()
             make.height.equalTo(300)
         }
-
     }
-
 }
