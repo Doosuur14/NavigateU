@@ -61,7 +61,7 @@ final class LoginView: UIView {
         email.snp.makeConstraints { make in
             make.top.equalTo(appName.snp.bottom).offset(70)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
     }
@@ -75,7 +75,7 @@ final class LoginView: UIView {
         password.snp.makeConstraints { make in
             make.top.equalTo(email.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
     }
@@ -91,7 +91,7 @@ final class LoginView: UIView {
         login.snp.makeConstraints { make in
             make.top.equalTo(password.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
     }
@@ -119,7 +119,7 @@ final class LoginView: UIView {
         continueWithGoogle.snp.makeConstraints { make in
             make.top.equalTo(redirect.snp.bottom).offset(50)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
 
@@ -159,7 +159,6 @@ final class LoginView: UIView {
         googleImage.snp.makeConstraints { make in
             make.edges.equalTo(continueWithGoogle).inset(15)
             make.leading.equalToSuperview().offset(-200)
-
         }
     }
 }

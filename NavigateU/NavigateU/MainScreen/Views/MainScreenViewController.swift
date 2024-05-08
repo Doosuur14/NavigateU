@@ -33,11 +33,21 @@ final class MainScreenViewController: UIViewController, UITableViewDataSource, U
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         viewModel.configureCell(tableView, cellForRowAt: indexPath)
+
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+        switch indexPath.row {
+        case 0:
+            let docmentArticle = DocumentViewController()
+            navigationController?.pushViewController(docmentArticle, animated: true)
+        default:
+            break
+        }
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         CGFloat(viewModel.heightForRowAt())
     }
+
 }

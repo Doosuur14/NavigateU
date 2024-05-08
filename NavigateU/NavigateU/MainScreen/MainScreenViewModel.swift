@@ -29,10 +29,14 @@ class MainScreenViewModel {
         return cell
     }
     private func setupMockData() {
-        content = [Content(photo: UIImage(named: "documents1"), title: "Documents", subTitle: "The easiet way to process your documents."),
-                   Content(photo: UIImage(named: "speaking"), title: "Speaking Clubs", subTitle: "Master russian language the fastest way possible."),
-                   Content(photo: UIImage(named: "tour"), title: "Places To Visit", subTitle: "Amazing places you have to visit in Russia."),
-                   Content(photo: UIImage(named: "jobs"), title: "Where To Find Jobs", subTitle: "The best jobs for your schedule as a student")
+        content = [Content(photo: UIImage(named: "documents1"), title: "Documents",
+                           subTitle: "The easiet way to process your documents."),
+                   Content(photo: UIImage(named: "speak"), title: "Speaking Clubs",
+                           subTitle: "Master russian language the fastest way possible."),
+                   Content(photo: UIImage(named: "tour"), title: "Places To Visit",
+                           subTitle: "Amazing places you have to visit in Russia."),
+                   Content(photo: UIImage(named: "job"), title: "Where To Find Jobs",
+                           subTitle: "The best jobs for your schedule as a student")
         ]
     }
 }

@@ -29,28 +29,36 @@ final class MainTableViewCell: UITableViewCell {
 
     }
 
+//    private func setupContentImage() {
+//        addSubview(contentImage)
+//        contentImage.layer.cornerRadius = 10
+//        contentImage.layer.masksToBounds = true
+//        contentImage.snp.makeConstraints { make in
+//            make.leading.equalTo(16)
+//            make.trailing.equalTo(-16)
+//            make.height.equalTo(300)
+//        }
+//    }
+
     private func setupContentImage() {
         addSubview(contentImage)
         contentImage.layer.cornerRadius = 10
         contentImage.layer.masksToBounds = true
         contentImage.snp.makeConstraints { make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalToSuperview()
             make.height.equalTo(300)
         }
     }
-
     private func setupContentTitle() {
         addSubview(contentTitle)
         contentTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         contentTitle.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.top.equalTo(contentImage.snp.bottom).offset(3)
-          //  make.width.equalTo(360)
             make.height.equalTo(25)
         }
     }
-
     private func setupContentSubtitle() {
         addSubview(contentSubtitle)
         contentSubtitle.font = UIFont.systemFont(ofSize: 15, weight: .light)

@@ -20,8 +20,6 @@ final class HomeDesignView: UIView {
     private lazy var terms: UILabel = UILabel()
     private lazy var conditions: UILabel = UILabel()
 
-
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpFunctions()
@@ -49,6 +47,7 @@ final class HomeDesignView: UIView {
         appName.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-10)
             make.leading.equalToSuperview().offset(134)
+            make.trailing.equalToSuperview().offset(-134)
             make.centerX.equalToSuperview()
         }
     }
@@ -61,6 +60,7 @@ final class HomeDesignView: UIView {
         slogan.snp.makeConstraints { make in
             make.top.equalTo(appName.snp.bottom).offset(70)
             make.leading.equalToSuperview().offset(120)
+            make.trailing.equalToSuperview().offset(-120)
             make.centerX.equalToSuperview()
         }
     }
@@ -73,6 +73,7 @@ final class HomeDesignView: UIView {
         slogan2.snp.makeConstraints { make in
             make.top.equalTo(slogan.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(100)
+            make.trailing.equalToSuperview().offset(-100)
             make.centerX.equalToSuperview()
         }
     }
@@ -91,7 +92,8 @@ final class HomeDesignView: UIView {
         getStarted.snp.makeConstraints { make in
             make.top.equalTo(slogan2.snp.bottom).offset(50)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
+            make.centerX.equalToSuperview()
             make.height.equalTo(50)
     }
 }
@@ -112,7 +114,8 @@ final class HomeDesignView: UIView {
         alreadyRegistered.snp.makeConstraints { make in
             make.top.equalTo(getStarted.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
+            make.centerX.equalToSuperview()
             make.height.equalTo(50)
         }
     }
@@ -125,6 +128,7 @@ final class HomeDesignView: UIView {
         terms.snp.makeConstraints { make in
             make.top.equalTo(alreadyRegistered.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(110)
+            make.trailing.equalToSuperview().offset(-110)
             make.centerX.equalToSuperview()
         }
     }
@@ -140,6 +144,7 @@ final class HomeDesignView: UIView {
         conditions.snp.makeConstraints { make in
             make.top.equalTo(terms.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(110)
+            make.trailing.equalToSuperview().offset(-110)
             make.centerX.equalToSuperview()
         }
     }
