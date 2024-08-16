@@ -29,17 +29,6 @@ final class MainTableViewCell: UITableViewCell {
 
     }
 
-//    private func setupContentImage() {
-//        addSubview(contentImage)
-//        contentImage.layer.cornerRadius = 10
-//        contentImage.layer.masksToBounds = true
-//        contentImage.snp.makeConstraints { make in
-//            make.leading.equalTo(16)
-//            make.trailing.equalTo(-16)
-//            make.height.equalTo(300)
-//        }
-//    }
-
     private func setupContentImage() {
         addSubview(contentImage)
         contentImage.layer.cornerRadius = 10
@@ -65,7 +54,6 @@ final class MainTableViewCell: UITableViewCell {
         contentSubtitle.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.top.equalTo(contentTitle.snp.bottom).offset(3)
-          //  make.width.equalTo(360)
             make.height.equalTo(20)
         }
     }

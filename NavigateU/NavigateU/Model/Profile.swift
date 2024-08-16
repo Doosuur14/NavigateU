@@ -10,6 +10,5 @@ import UIKit
 
 struct Profile {
     let photo: UIImage?
-    let lable: String
-    let arrow: UIImage?
+    let label: String
 }

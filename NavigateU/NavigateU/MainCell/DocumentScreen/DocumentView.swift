@@ -30,8 +30,6 @@ class DocumentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-
-
     private func setupTitle() {
         addSubview(title)
         title.font = .systemFont(ofSize: 15, weight: .bold)
@@ -59,6 +57,7 @@ class DocumentView: UIView {
         content.font = .systemFont(ofSize: 15, weight: .light)
         content.isScrollEnabled = true
         content.textColor = UIColor(named: "SubtitleColor")
+        content.isEditable = false
         content.snp.makeConstraints { make in
             make.top.equalTo(image.snp.bottom).offset(15)
             make.leading.equalToSuperview().offset(16)

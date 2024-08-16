@@ -6,29 +6,24 @@
 //
 
 import Foundation
+import CoreData
 
-struct Article: Decodable {
+struct ArticleResponse: Decodable {
     let id: Int
     let title: String
     let content: String
-    let imageURL: URL
+    let imageURL: String
     let likes: String
-
-
-    private enum CodingKeys: String, CodingKey {
-            case id, title, content, imageURL, likes
-        }
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            id = try container.decode(Int.self, forKey: .id)
-            title = try container.decode(String.self, forKey: .title)
-            content = try container.decode(String.self, forKey: .content)
-            // Decode imageURL as URL
-            let urlString = try container.decode(String.self, forKey: .imageURL)
-            guard let url = URL(string: urlString) else {
-                throw DecodingError.dataCorruptedError(forKey: .imageURL, in: container, debugDescription: "Invalid URL string.")
-            }
-            imageURL = url
-            likes = try container.decode(String.self, forKey: .likes)
-        }
 }
+
+extension Article {
+    convenience init(articleResponse: ArticleResponse, context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.id = Int32(articleResponse.id)
+        self.title = articleResponse.title
+        self.imageURL = articleResponse.imageURL
+        self.content = articleResponse.content
+        self.likes = articleResponse.likes
+    }
+}
+

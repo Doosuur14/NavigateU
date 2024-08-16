@@ -7,19 +7,23 @@
 
 import UIKit
 
-class HomeScreenView: UIView {
+final class HomeScreenView: UIView {
 
     lazy var backgroundImage: UIImageView = UIImageView()
     let secondView = HomeDesignView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpBackgroundImage()
-        setUpSecondView()
-
+        setUpFunctions()
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpFunctions() {
+        setUpBackgroundImage()
+        setUpSecondView()
     }
 
     private func setUpBackgroundImage() {
@@ -41,10 +45,10 @@ class HomeScreenView: UIView {
         secondView.layer.cornerRadius = 10
         secondView.snp.makeConstraints { make in
             make.top.equalTo(backgroundImage.snp.bottom).offset(30)
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+          //  make.leading.equalToSuperview()
             make.height.equalTo(300)
         }
-
     }
-
 }

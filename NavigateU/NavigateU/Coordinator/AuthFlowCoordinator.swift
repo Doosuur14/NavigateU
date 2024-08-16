@@ -8,48 +8,56 @@
 import Foundation
 import UIKit
 
-protocol FlowCoordinatorProtocol: AnyObject {
-    func toRegistrationScreen()
-    func toLoginScreen()
-    func toHomeScreen()
-    func start(viewCon: UIViewController)
-
+protocol AuthFlowCoordinatorOutput: AnyObject {
+    func authFlowCoordinatorEnteredUser()
 }
 
-final class AuthFlowCoordinator: FlowCoordinatorProtocol {
+final class AuthFlowCoordinator: Coordinator {
 
-    private let rootViewController: UINavigationController
-    private let tabBarController = TabBarViewController()
+    var navigationController: UINavigationController
+    private var authFlowCoordinatorOutput: AuthFlowCoordinatorOutput?
 
-    init(rootViewController: UINavigationController) {
-        self.rootViewController = rootViewController
+    init(navigationController: UINavigationController, authFlowCoordinatorOutput: AuthFlowCoordinatorOutput) {
+        self.navigationController = navigationController
+       self.authFlowCoordinatorOutput = authFlowCoordinatorOutput
     }
 
-    func start(viewCon: UIViewController) {
-        rootViewController.pushViewController(viewCon, animated: true)
+    func start() {
+        let homeController = HomeModuleBuilder().buildHomepage(output: self)
+       // navigationController.setViewControllers([homeController], animated: true)
+        navigationController.setViewControllers([homeController], animated: true)
+    }
+}
+
+extension AuthFlowCoordinator: StartOutput, LoginOutput, SignUpOutput {
+    func signedInUser() {
+        print("User is signed up so transitioning")
+        authFlowCoordinatorOutput?.authFlowCoordinatorEnteredUser()
     }
 
-
-    func toRegistrationScreen() {
-        let registrationModel = RegistrationModel()
-        let registrationViewController = RegistrationScreenViewController(viewModel: registrationModel)
-        rootViewController.pushViewController(registrationViewController, animated: true)
+    func signedUpUser() {
+       // authFlowCoordinatorOutput?.authFlowCoordinatorEnteredUser()
+        goToLoginController()
     }
 
-    func toLoginScreen() {
-        let loginViewController = MainModuleBuider().buildLogin()
-        rootViewController.pushViewController(loginViewController, animated: true)
+    func goToSignUpController() {
+        let signUpViewController = RegisterModuleBuilder().buildRegister(output: self)
+        navigationController.pushViewController(signUpViewController, animated: true)
+        print("regnscreen should now be visible")
     }
 
-    func toHomeScreen() {
-        DispatchQueue.main.async { [weak self] in
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-                  let window = sceneDelegate.window else {
-                return
-            }
-            let navigationController = UINavigationController(rootViewController: self?.tabBarController ?? HomeScreenViewController())
-            window.rootViewController = navigationController
-            window.makeKeyAndVisible()
-        }
+    func goToLoginController() {
+        let signInViewController = LoginModuleBuilder().buildLogin(output: self)
+        navigationController.pushViewController(signInViewController, animated: true)
+        print("Login Screen should now be visible")
     }
+
+    func goToReg() {
+        goToSignUpController()
+    }
+
+    func goToLogin() {
+        goToLoginController()
+    }
+
 }
