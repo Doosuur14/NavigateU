@@ -27,9 +27,9 @@
     import AppKit
 #endif
 
-public extension ConstraintView {
 
-    // swiftlint:disable:next identifier_name
+public extension ConstraintView {
+    
     @available(*, deprecated, renamed:"snp.left")
     var snpLeft: ConstraintItem { return self.snp.left }
 
@@ -43,7 +43,7 @@ public extension ConstraintView {
     var snpBottom: ConstraintItem { return self.snp.bottom }
 
     @available(*, deprecated, renamed:"snp.leading")
-    var snpLeading: ConstraintItem { return self.snp.leading}
+    var snpLeading: ConstraintItem { return self.snp.leading }
 
     @available(*, deprecated, renamed:"snp.trailing")
     var snpTrailing: ConstraintItem { return self.snp.trailing }
@@ -98,14 +98,14 @@ public extension ConstraintView {
     @available(iOS, deprecated, renamed:"snp.centerXWithinMargins")
     @available(iOS 8.0, *)
     var snpCenterXWithinMargins: ConstraintItem { return self.snp.centerXWithinMargins }
-
+    
     @available(iOS, deprecated, renamed:"snp.centerYWithinMargins")
     @available(iOS 8.0, *)
     var snpCenterYWithinMargins: ConstraintItem { return self.snp.centerYWithinMargins }
 
     @available(*, deprecated, renamed:"snp.edges")
     var snpEdges: ConstraintItem { return self.snp.edges }
-    
+
     @available(*, deprecated, renamed:"snp.size")
     var snpSize: ConstraintItem { return self.snp.size }
 

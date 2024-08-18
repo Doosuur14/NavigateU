@@ -27,8 +27,6 @@
     import AppKit
 #endif
 
-// swiftlint:disable function_body_length
-// swiftlint:disable cyclomatic_complexity
 public struct ConstraintPriority : ExpressibleByFloatLiteral, Equatable, Strideable {
     public typealias FloatLiteralType = Float
     
@@ -69,8 +67,8 @@ public struct ConstraintPriority : ExpressibleByFloatLiteral, Equatable, Stridea
 
     // MARK: Strideable
 
-    public func advanced(by number: FloatLiteralType) -> ConstraintPriority {
-        return ConstraintPriority(floatLiteral: value + number)
+    public func advanced(by num : FloatLiteralType) -> ConstraintPriority {
+        return ConstraintPriority(floatLiteral: value + num)
     }
 
     public func distance(to other: ConstraintPriority) -> FloatLiteralType {

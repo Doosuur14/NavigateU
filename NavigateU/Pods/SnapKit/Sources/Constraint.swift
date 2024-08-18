@@ -71,7 +71,7 @@ public final class Constraint {
     // MARK: Initialization
     // swiftlint:disable function_body_length
     // swiftlint:disable cyclomatic_complexity
-
+    
     internal init(from: ConstraintItem,
                   to: ConstraintItem,
                   relation: ConstraintRelation,
@@ -277,16 +277,16 @@ public final class Constraint {
     @available(*, deprecated, renamed:"update(priority:)")
     public func updatePriority(amount: ConstraintPriorityTarget) -> Void { self.update(priority: amount) }
 
-    @available(*, deprecated, message:"Use update(priority: ConstraintPriorityTarget) instead.")
+    @available(*, deprecated, message: "Use update(priority: ConstraintPriorityTarget) instead.")
     public func updatePriorityRequired() -> Void {}
 
-    @available(*, deprecated, message:"Use update(priority: ConstraintPriorityTarget) instead.")
+    @available(*, deprecated, message: "Use update(priority: ConstraintPriorityTarget) instead.")
     public func updatePriorityHigh() -> Void { fatalError("Must be implemented by Concrete subclass.") }
 
-    @available(*, deprecated, message:"Use update(priority: ConstraintPriorityTarget) instead.")
+    @available(*, deprecated, message: "Use update(priority: ConstraintPriorityTarget) instead.")
     public func updatePriorityMedium() -> Void { fatalError("Must be implemented by Concrete subclass.") }
 
-    @available(*, deprecated, message:"Use update(priority: ConstraintPriorityTarget) instead.")
+    @available(*, deprecated, message: "Use update(priority: ConstraintPriorityTarget) instead.")
     public func updatePriorityLow() -> Void { fatalError("Must be implemented by Concrete subclass.") }
 
     // MARK: Internal

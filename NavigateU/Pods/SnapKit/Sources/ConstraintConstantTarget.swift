@@ -46,9 +46,11 @@ extension ConstraintDirectionalInsets: ConstraintConstantTarget {
 }
 #endif
 
-// swiftlint:disable function_body_length
-// swiftlint:disable cyclomatic_complexity
 extension ConstraintConstantTarget {
+
+    // swiftlint:disable function_body_length
+    // swiftlint:disable cyclomatic_complexity
+    
     internal func constraintConstantTargetValueFor(layoutAttribute: LayoutAttribute) -> CGFloat {
         if let value = self as? CGFloat {
             return value

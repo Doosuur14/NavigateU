@@ -27,9 +27,7 @@
     import AppKit
 #endif
 
-
-internal struct ConstraintAttributes : OptionSet, ExpressibleByIntegerLiteral {
-    
+internal struct ConstraintAttributes: OptionSet, ExpressibleByIntegerLiteral {
     typealias IntegerLiteralType = UInt
     
     internal init(rawValue: UInt) {
@@ -53,9 +51,7 @@ internal struct ConstraintAttributes : OptionSet, ExpressibleByIntegerLiteral {
     internal func toRaw() -> UInt { return self.rawValue }
     internal static func fromRaw(_ raw: UInt) -> ConstraintAttributes? { return self.init(raw) }
     internal static func fromMask(_ raw: UInt) -> ConstraintAttributes { return self.init(raw) }
-    
     // normal
-    
     internal static let none: ConstraintAttributes = 0
     internal static let left: ConstraintAttributes = ConstraintAttributes(UInt(1) << 0)
     internal static let top: ConstraintAttributes = ConstraintAttributes(UInt(1) << 1)
