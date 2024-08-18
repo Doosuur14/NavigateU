@@ -21,6 +21,8 @@ final class ProfileView: UIView {
     lazy var tableView: UITableView = UITableView()
     lazy var logOut: UIButton = UIButton()
     lazy var deleteAccount: UIButton = UIButton()
+    lazy var customSwitch: UISwitch = UISwitch()
+    lazy var theme: UILabel = UILabel()
     let stackView = UIStackView()
 
     override init(frame: CGRect) {
@@ -37,6 +39,8 @@ final class ProfileView: UIView {
         setupTableview()
         setupLogout()
         setupDelete()
+        setupSwitch()
+        setupTheme()
 
     }
 
@@ -64,17 +68,17 @@ final class ProfileView: UIView {
     private func setupFirstname() {
         addSubview(firstName)
         firstName.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        firstName.textColor = .black
+        firstName.textColor = .label
     }
     private func setupLastname() {
         addSubview(lastName)
         lastName.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        lastName.textColor = .black
+        lastName.textColor = .label
     }
 
     private func setupUseremail() {
         addSubview(userEmail)
-        userEmail.textColor = .black
+        userEmail.textColor = .label
         userEmail.font = UIFont.systemFont(ofSize: 12, weight: .light)
     }
     private func setupStackView() {
@@ -152,6 +156,21 @@ final class ProfileView: UIView {
             make.top.equalTo(tableView.snp.bottom).offset(-10)
             make.trailing.equalTo(-16)
         }
+    }
+
+    private func setupSwitch() {
+        customSwitch.isOn = true
+        customSwitch.tintColor = .white
+        customSwitch.backgroundColor = .systemGray5
+        customSwitch.thumbTintColor? = .custom
+        customSwitch.layer.cornerRadius = 16
+    }
+
+    private func setupTheme() {
+        theme.text = "Dark Mode"
+        theme.textColor = .custom
+        theme.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        theme.widthAnchor.constraint(equalToConstant: 100).isActive = true
     }
 
     func setupDataSource(with dataSource: UITableViewDataSource) {

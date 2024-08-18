@@ -31,7 +31,7 @@ final class LoginViewController<ViewModel: LoginMainViewModelProtocol>: UIViewCo
         loginDesignview = LoginView(frame: view.bounds)
         view = loginDesignview
         loginDesignview?.delegate = self
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
     }
 
     private func configureIO() {

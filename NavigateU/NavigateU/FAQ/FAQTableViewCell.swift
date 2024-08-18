@@ -29,6 +29,7 @@ class FAQTableViewCell: UITableViewCell {
     private func setupContentTitle() {
         addSubview(contentTitle)
         contentTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        contentTitle.textColor = .label
         contentTitle.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(3)
@@ -38,7 +39,7 @@ class FAQTableViewCell: UITableViewCell {
     private func setupContentDescription() {
         addSubview(contentDescription)
         contentDescription.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        contentDescription.textColor = .black
+        contentDescription.textColor = UIColor(named: "SubtitleColor")
         contentDescription.backgroundColor = .clear
         contentDescription.isEditable = false
         contentDescription.isScrollEnabled = false

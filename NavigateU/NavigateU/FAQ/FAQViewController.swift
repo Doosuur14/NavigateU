@@ -32,7 +32,7 @@ class FAQViewController: UIViewController, UITableViewDataSource,
         faqView?.setupDataSource(with: self)
         faqView?.tableView.separatorStyle = .none
         faqView?.tableView.register(FAQTableViewCell.self, forCellReuseIdentifier: FAQTableViewCell.FAQreuseIdentifier)
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
 
     }
 

@@ -24,18 +24,16 @@ final class ProfileViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         setupView()
         setupGesture()
-       // viewModel.fetchUserProfile()
         viewModel.onProfileUpdated = { [weak self] in
             self?.setupBindings()
-
         }
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.fetchUserProfile()
         self.profileView?.tableView.reloadData()
     }
-
 
 
     private func setupView() {
@@ -46,8 +44,11 @@ final class ProfileViewController: UIViewController, UITableViewDelegate, UITabl
         profileView?.tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.profileReuseIdentifier)
         profileView?.tableView.separatorStyle = .none
         view = profileView
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
+
     }
+
+
 
     private func setupBindings() {
         profileView?.firstName.text = viewModel.firstName
@@ -58,7 +59,6 @@ final class ProfileViewController: UIViewController, UITableViewDelegate, UITabl
         }
         self.profileView?.tableView.reloadData()
     }
-
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -78,22 +78,21 @@ final class ProfileViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.deselectRow(at: indexPath, animated: true)
         switch (indexPath.section, indexPath.row) {
         case (0, 0):
-            print("Edit Profile Tapped")
             let pviewModel = EditProfileViewModel()
             let viewCon = EditProfileViewController(viewModel: pviewModel)
             self.navigationController?.pushViewController(viewCon, animated: true)
         case (1, 0):
-            print("Theme Tapped")
+            viewModel.toggleTheme()
+            profileView?.tableView.reloadData()
         case (2, 0):
             let fviewModel = FAQViewModel()
             let viewCon = FAQViewController(viewModel: fviewModel)
             self.navigationController?.pushViewController(viewCon, animated: true)
-        case (2, 1):
-            print("Terms and Conditions Tapped")
         default:
             break
         }
     }
+
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {

@@ -24,32 +24,27 @@ final class AuthFlowCoordinator: Coordinator {
 
     func start() {
         let homeController = HomeModuleBuilder().buildHomepage(output: self)
-       // navigationController.setViewControllers([homeController], animated: true)
         navigationController.setViewControllers([homeController], animated: true)
     }
 }
 
 extension AuthFlowCoordinator: StartOutput, LoginOutput, SignUpOutput {
     func signedInUser() {
-        print("User is signed up so transitioning")
         authFlowCoordinatorOutput?.authFlowCoordinatorEnteredUser()
     }
 
     func signedUpUser() {
-       // authFlowCoordinatorOutput?.authFlowCoordinatorEnteredUser()
         goToLoginController()
     }
 
     func goToSignUpController() {
         let signUpViewController = RegisterModuleBuilder().buildRegister(output: self)
         navigationController.pushViewController(signUpViewController, animated: true)
-        print("regnscreen should now be visible")
     }
 
     func goToLoginController() {
         let signInViewController = LoginModuleBuilder().buildLogin(output: self)
         navigationController.pushViewController(signInViewController, animated: true)
-        print("Login Screen should now be visible")
     }
 
     func goToReg() {

@@ -58,7 +58,8 @@ final class HomeDesignView: UIView {
         addSubview(slogan)
         slogan.text = "We make settling down as"
         slogan.font = UIFont.systemFont(ofSize: 15, weight: .bold)
-        slogan.textColor = UIColor(named: "SubtitleColor")
+//        slogan.textColor = UIColor(named: "SubtitleColor")
+        slogan.textColor = .label
         slogan.snp.makeConstraints { make in
             make.top.equalTo(appName.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
@@ -69,7 +70,8 @@ final class HomeDesignView: UIView {
         addSubview(slogan2)
         slogan2.text = "foreign student in Russia easier!"
         slogan2.font = UIFont.systemFont(ofSize: 15, weight: .bold)
-        slogan2.textColor = UIColor(named: "SubtitleColor")
+//        slogan2.textColor = UIColor(named: "SubtitleColor")
+        slogan2.textColor = .label
         slogan2.snp.makeConstraints { make in
             make.top.equalTo(slogan.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
@@ -99,7 +101,7 @@ final class HomeDesignView: UIView {
         addSubview(alreadyRegistered)
         alreadyRegistered.setTitle("I already have an account", for: .normal)
         alreadyRegistered.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        alreadyRegistered.setTitleColor(.color3, for: .normal)
+        alreadyRegistered.setTitleColor(.label, for: .normal)
         alreadyRegistered.isEnabled = true
         alreadyRegistered.backgroundColor = UIColor(named: "Color2")
         alreadyRegistered.clipsToBounds = true

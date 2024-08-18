@@ -47,7 +47,7 @@ class DocumentViewController: UIViewController {
     private func setupViews() {
         document = DocumentView(frame: view.bounds)
         view = document
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         document?.title.text = article.title
         if let url = URL(string: article.imageURL ?? "") {
             URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
@@ -90,7 +90,6 @@ extension DocumentViewController: LikeButtonDelegate {
                 case .success:
                     self?.isLiked = false
                     self?.updateLikeButton()
-                    print("Document is unliked")
                 case .failure(let error):
                     print("Failed to unlike article: \(error.localizedDescription)")
                 }
@@ -101,7 +100,6 @@ extension DocumentViewController: LikeButtonDelegate {
                 case .success:
                     self?.isLiked = true
                     self?.updateLikeButton()
-                    print("Document is liked")
                 case .failure(let error):
                     print("Failed to like article: \(error.localizedDescription)")
                 }

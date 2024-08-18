@@ -26,6 +26,25 @@ class ProfileViewModel {
     }
 
     init() {
+        applyTheme()
+    }
+
+    @objc func toggleTheme() {
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        UserDefaults.standard.set(!isDarkMode, forKey: "isDarkMode")
+        applyTheme()
+    }
+    
+    private func applyTheme() {
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        let interfaceStyle: UIUserInterfaceStyle = isDarkMode ? .dark : .light
+        allWindows().forEach { window in
+            window.overrideUserInterfaceStyle = interfaceStyle
+        }
+        if let appDelegate = UIApplication.shared.delegate as? SceneDelegate,
+           let window = appDelegate.window {
+            window.overrideUserInterfaceStyle = interfaceStyle
+        }
     }
 
     func heightForRowAt() -> Int {
@@ -91,7 +110,6 @@ class ProfileViewModel {
                 if let user = users?.first {
                     user.profileImageUrl = urlString
                     try self?.context.save()
-                    print("Successfully updated profile image URL in Firestore and Core Data")
                     self?.loadPhoto(urlString)
                 } else {
                     print("User not found in Core Data")
@@ -116,9 +134,14 @@ class ProfileViewModel {
             cell?.redirectButton.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
 
         case (1, 0):
-            cell?.configureCell(with: Profile(photo: UIImage(systemName: "rays"), label: "Display Mode"))
-             cell?.redirectButton.setImage(UIImage(systemName: "switch.2"), for: .normal)
+            let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+            let modeLabel = isDarkMode ? "Dark Mode" : "Light Mode"
 
+            cell?.configureCell(with: Profile(photo: UIImage(systemName: "rays"), label: modeLabel))
+             cell?.redirectButton.setImage(UIImage(systemName: "switch.2"), for: .normal)
+            cell?.redirectButton.addTarget(self, action: #selector(toggleTheme), for: .touchUpInside)
+            cell?.redirectButton.isEnabled = true
+            cell?.isUserInteractionEnabled = true
         case (2, 0):
             cell?.configureCell(with: Profile(photo: UIImage(systemName: "questionmark.circle.fill"), label: "FAQ"))
         case (2, 1):
@@ -143,4 +166,13 @@ class ProfileViewModel {
 
     }
 
+    private func allWindows() -> [UIWindow] {
+        if #available(iOS 15.0, *) {
+            return UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+        } else {
+            return UIApplication.shared.windows
+        }
+    }
 }

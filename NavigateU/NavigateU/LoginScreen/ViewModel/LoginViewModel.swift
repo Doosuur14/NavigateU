@@ -42,13 +42,10 @@ final class LoginViewModel: LoginMainViewModelProtocol {
             UserService.shared.login(email: email, password: password) { [weak self] result in
                 switch result {
                 case .success:
-                    print("login successful!")
                     UserDefaults.standard.set(email, forKey: "curUser")
                     self?.state = .isloggedSuccessfully
                     self?.delegate?.signedInUser()
-                    print("the state is \(String(describing: self?.state))")
                 case .failure(let error):
-                    print("State set to loginFailed")
                     self?.state = .loginFailed
                     let loginError = EnumError.loginFailed(error)
                     loginError.handleError()

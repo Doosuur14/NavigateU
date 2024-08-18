@@ -49,5 +49,4 @@ class LikedArticleView: UIView {
     func setupDelegate(with delegate: UITableViewDelegate) {
         self.tableView.delegate = delegate
     }
-
 }

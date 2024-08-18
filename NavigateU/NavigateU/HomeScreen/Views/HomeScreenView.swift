@@ -43,11 +43,11 @@ final class HomeScreenView: UIView {
         backgroundColor = .white
         secondView.backgroundColor = .white
         secondView.layer.cornerRadius = 10
+        secondView.backgroundColor = .systemBackground
         secondView.snp.makeConstraints { make in
             make.top.equalTo(backgroundImage.snp.bottom).offset(30)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
-          //  make.leading.equalToSuperview()
             make.height.equalTo(300)
         }
     }

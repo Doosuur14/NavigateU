@@ -45,7 +45,7 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
         likedArticleView?.tableView.separatorStyle = .none
         likedArticleView?.tableView.register(LikedArticleCell.self,
                                              forCellReuseIdentifier: LikedArticleCell.LikedArticleReuseIdentifier)
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

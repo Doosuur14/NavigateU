@@ -12,9 +12,6 @@ class AppCoordinator: Coordinator {
 
     var navigationController: UINavigationController
     var flowCoordinator: Coordinator?
-//    var isLogged: Bool {
-//        return UserDefaults.standard.string(forKey: "curUser") != nil
-//    }
     var isLogged = false
 
     init(navigationController: UINavigationController) {
@@ -23,12 +20,8 @@ class AppCoordinator: Coordinator {
 
     func start() {
         if isLogged {
-            print("main \(isLogged)")
-            print("User is logged in, showing main flow")
             showMainFlow()
         } else {
-            print("auth \(isLogged)")
-            print("User is not logged in, showing auth flow")
             showAuthFlow()
         }
     }

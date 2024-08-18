@@ -28,6 +28,7 @@ class MainFlowCoordinator: Coordinator {
         let profileviewController = ProfileModuleBuilder().buildProfile()
         profileviewController.tabBarItem = UITabBarItem(title: "Profile",
                                                         image: UIImage(systemName: "person.circle.fill"), tag: 1)
+
         let likedArticleController = LikedArticleModuleBuilder().buildLikedArticlePage()
         likedArticleController.tabBarItem = UITabBarItem(title: "Favourites",
                                                          image: UIImage(systemName: "heart"), tag: 2)
@@ -36,5 +37,6 @@ class MainFlowCoordinator: Coordinator {
         tabBarController.tabBar.tintColor = UIColor(named: "CustomColor")
         tabBarController.tabBar.backgroundColor = .systemGray6
         navigationController.setViewControllers([tabBarController], animated: true)
+
     }
 }

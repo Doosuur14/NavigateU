@@ -10,11 +10,11 @@ import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Change the color of the back button text
-        UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
-        UINavigationBar.appearance().tintColor = .black
+        UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor(named: "CustomColor") as Any], for: .normal)
+        UINavigationBar.appearance().tintColor = UIColor(named: "CustomColor")
         FirebaseApp.configure()
         return true
     }
