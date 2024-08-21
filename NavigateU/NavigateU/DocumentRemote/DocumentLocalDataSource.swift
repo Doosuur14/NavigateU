@@ -109,7 +109,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
                 let users = try self.context.fetch(fetchRequest)
                 if let user = users.first {
                     let likedArticles = user.likedArticles as? Set<Article> ?? Set<Article>()
-                    let likedArticleIds = likedArticles.map { $0.id }
                     if !likedArticles.contains(where: { $0.id == article.id }) {
                         user.addToLikedArticles(article)
                         article.addToLikedByUser(user)
@@ -164,6 +163,8 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
             }
         }
     }
+
+
     func removeDuplicateArticles() {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
 

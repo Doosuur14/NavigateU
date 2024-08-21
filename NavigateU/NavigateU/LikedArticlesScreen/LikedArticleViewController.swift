@@ -9,10 +9,9 @@ import UIKit
 import Combine
 
 class LikedArticleViewController: UIViewController, UITableViewDataSource,
-                                  UITableViewDelegate {
+                                  UITableViewDelegate, LikedarticleViewDelegate {
 
     var likedArticleView: LikedArticleView?
-    var likedArticles: [Article] = []
     let viewModel: LikedArticlesViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -40,6 +39,7 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
     private func setupView() {
         likedArticleView = LikedArticleView(frame: view.bounds)
         view = likedArticleView
+        likedArticleView?.delegate = self
         likedArticleView?.setupDelegate(with: self)
         likedArticleView?.setupDataSource(with: self)
         likedArticleView?.tableView.separatorStyle = .none
@@ -59,5 +59,11 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         CGFloat(viewModel.heightForRowAt())
+    }
+
+    func didPressSortButton() {
+        print("button pressed to sort.")
+        viewModel.sortArticlesByLikes()
+        likedArticleView?.tableView.reloadData()
     }
 }

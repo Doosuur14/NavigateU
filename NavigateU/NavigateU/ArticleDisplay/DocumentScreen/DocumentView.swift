@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Cosmos
 
 protocol LikeButtonDelegate: AnyObject {
     func didtapLikeButton()
@@ -90,6 +91,7 @@ class DocumentView: UIView {
             make.leading.equalTo(likeButton.snp.trailing).offset(3)
         }
     }
+
     private func setupViews() {
         setupTitle()
         setupImage()

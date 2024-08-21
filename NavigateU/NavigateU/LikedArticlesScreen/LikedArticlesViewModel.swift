@@ -52,6 +52,16 @@ final class LikedArticlesViewModel {
         fetchedArticles = resolveFaults(for: fetchedArticles)
         self.likedArticles = fetchedArticles
     }
+
+    func sortArticlesByLikes() {
+        likedArticles.sort { (article1, article2) -> Bool in
+            guard let likes1 = Int(article1.likes ?? "0"), let likes2 = Int(article2.likes ?? "0") else {
+                return false
+            }
+            return likes1 > likes2
+        }
+    }
+
     private func setupBindings() {
             documentLocalDataSource.articleLikedPublisher
                 .sink { [weak self] _ in
