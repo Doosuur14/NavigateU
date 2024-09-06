@@ -18,7 +18,6 @@ final class UserService {
                 print("errorr while logging in this user")
                 completion(.failure(LoginError.userNotFound))
             } else if let authResult = authResult {
-                print("user successfully logged in")
                 completion(.success(authResult))
             }
         }
@@ -33,7 +32,6 @@ final class UserService {
             if let error = error {
                 print("Error deleting user account: \(error.localizedDescription)")
             } else {
-                print("User successfully deleted.")
                 self.logout()
             }
         }
@@ -42,7 +40,6 @@ final class UserService {
     func logout() {
         do {
             try Auth.auth().signOut()
-            print("user successfuly signedout")
         } catch let error {
             print("Error signing out user account: \(error.localizedDescription)")
         }

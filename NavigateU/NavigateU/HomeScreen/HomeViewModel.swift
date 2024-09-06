@@ -16,12 +16,10 @@ class HomeViewModel {
     weak var delegate: StartOutput?
 
     func goToLogin() {
-        print("go to login")
         delegate?.goToLogin()
     }
 
     func goToRegister() {
-        print("go to reg")
         delegate?.goToReg()
     }
 }

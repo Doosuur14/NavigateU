@@ -33,7 +33,7 @@ class DocumentView: UIView {
     private func setupTitle() {
         addSubview(title)
         title.font = .systemFont(ofSize: 15, weight: .bold)
-        title.textColor = .black
+        title.textColor = .label
         title.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(16)
             make.leading.equalToSuperview().offset(16)
@@ -56,7 +56,7 @@ class DocumentView: UIView {
         addSubview(content)
         content.font = .systemFont(ofSize: 15, weight: .light)
         content.isScrollEnabled = true
-        content.textColor = UIColor(named: "SubtitleColor")
+        content.textColor = .label
         content.isEditable = false
         content.snp.makeConstraints { make in
             make.top.equalTo(image.snp.bottom).offset(15)
@@ -83,7 +83,7 @@ class DocumentView: UIView {
 
     private func setupLikeCount() {
         addSubview(likeCount)
-        likeCount.textColor = .black
+        likeCount.textColor = .label
         likeCount.font = .systemFont(ofSize: 17, weight: .medium)
         likeCount.snp.makeConstraints { make in
             make.top.equalTo(content.snp.bottom).offset(10)

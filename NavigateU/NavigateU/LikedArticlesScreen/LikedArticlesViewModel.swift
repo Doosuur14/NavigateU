@@ -51,7 +51,6 @@ final class LikedArticlesViewModel {
         var fetchedArticles = documentLocalDataSource.getLikedArticles()
         fetchedArticles = resolveFaults(for: fetchedArticles)
         self.likedArticles = fetchedArticles
-        print("Fetched liked articles for view model side: \(likedArticles)")
     }
     private func setupBindings() {
             documentLocalDataSource.articleLikedPublisher

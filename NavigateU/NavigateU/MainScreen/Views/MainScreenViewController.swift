@@ -42,7 +42,7 @@ final class MainScreenViewController: UIViewController, UITableViewDataSource,
         mainView?.tableView.separatorStyle = .none
         mainView?.searchBar.delegate = self
         mainView?.label.frame = view.bounds
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

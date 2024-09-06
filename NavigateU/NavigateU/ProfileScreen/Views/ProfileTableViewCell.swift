@@ -41,7 +41,7 @@ class ProfileTableViewCell: UITableViewCell {
     }
     private func setupContentlabel() {
         addSubview(contentLabel)
-        contentLabel.textColor = .black
+        contentLabel.textColor = .label
         contentLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         contentLabel.snp.makeConstraints { make in
             make.leading.equalTo(iconImage.snp.trailing).offset(16)

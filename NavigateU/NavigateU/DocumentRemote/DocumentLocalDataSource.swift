@@ -74,7 +74,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
             let users = try context.fetch(fetchRequest)
             if let user = users.first, let likedArticles = user.likedArticles as? Set<Article> {
                 let isLiked = likedArticles.contains { $0.id == articleId }
-                print("isArticleLiked for articleId \(articleId): \(isLiked)")
                 return isLiked
             }
         } catch {
@@ -102,46 +101,43 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
             return
         }
 
-            let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "uid == %@", currentUser)
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uid == %@", currentUser)
 
-            context.perform {
-                do {
-                    let users = try self.context.fetch(fetchRequest)
-                    if let user = users.first {
-                        let likedArticles = user.likedArticles as? Set<Article> ?? Set<Article>()
-                        let likedArticleIds = likedArticles.map { $0.id }
-                        print("Currently liked article IDs: \(likedArticleIds)")
-                        if !likedArticles.contains(where: { $0.id == article.id }) {
-                            user.addToLikedArticles(article)
-                            article.addToLikedByUser(user)
-                            if let likes = article.likes, let likesInt = Int(likes) {
-                                article.likes = String(likesInt + 1)
-                            }
-                            try self.context.save()
-                            let updatedLikedArticles = self.getLikedArticles()
-                            print("Currently liked article IDs after liking: \(updatedLikedArticles.map { $0.id })")
-                            self.articleLiked = true
-                                completion(.success(()))
-                        } else {
-                            print("Article already liked.")
-                            self.articleUnliked = false
-                            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Article already liked"])))
+        context.perform {
+            do {
+                let users = try self.context.fetch(fetchRequest)
+                if let user = users.first {
+                    let likedArticles = user.likedArticles as? Set<Article> ?? Set<Article>()
+                    let likedArticleIds = likedArticles.map { $0.id }
+                    if !likedArticles.contains(where: { $0.id == article.id }) {
+                        user.addToLikedArticles(article)
+                        article.addToLikedByUser(user)
+                        if let likes = article.likes, let likesInt = Int(likes) {
+                            article.likes = String(likesInt + 1)
                         }
+                        try self.context.save()
+                        self.articleLiked = true
+                        completion(.success(()))
                     } else {
-                        completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found"])))
+                        print("Article already liked.")
+                        self.articleUnliked = false
+                        completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Article already liked"])))
                     }
-                } catch {
-                    completion(.failure(error))
+                } else {
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found"])))
                 }
+            } catch {
+                completion(.failure(error))
             }
         }
+    }
 
     func unlikeArticle(article: Article, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser?.uid else {
             print("no user found")
             return
-    }
+        }
 
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uid == %@", currentUser)
@@ -156,24 +152,13 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
                     if let likes = article.likes, let likesInt = Int(likes) {
                         article.likes = String(likesInt - 1)
                     }
-                        try self.context.save()
-
-                        // Fetch and verify the updated article
-//                        let updatedArticle = self.getArticle(articleId: Int(article.id))
-//                        print("Article after unliking: \(updatedArticle?.id ?? 0), likes: \(updatedArticle?.likes ?? "0")")
-//
-//                        print("Article unliked successfully. Current likes: \(article.likes ?? "0")")
-//                        print("after unliking: \(self.isArticleLiked(articleId: Int(article.id)))")
-//                        print(likedArticles)
-                    let updatedLikedArticles = self.getLikedArticles()
-                    print("Currently liked article IDs after unliking: \(updatedLikedArticles.map { $0.id })")
+                    try self.context.save()
                     self.articleUnliked = true
-                            completion(.success(()))
-                    } else {
-                        print("Article not found in liked articles.")
-                        self.articleUnliked = false
-                        completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Article not found in liked articles"])))
-                    }
+                    completion(.success(()))
+                } else {
+                    self.articleUnliked = false
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Article not found in liked articles"])))
+                }
             } catch {
                 completion(.failure(error))
             }
@@ -199,7 +184,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
                                 }
                             }
                         }
-
                         try self.context.save()
                         print("Removed duplicates from liked articles.")
                     }

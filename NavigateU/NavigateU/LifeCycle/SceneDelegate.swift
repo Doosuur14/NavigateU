@@ -17,17 +17,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         UserDefaults.standard.removeObject(forKey: "curUser")
-        print("UserDefaults curUser key cleared for testing")
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-//        let navigationController = UINavigationController()
-//        coordinator = AppCoordinator(navigationController: navigationController)
-//        coordinator?.start()
+        applyTheme()
+
         let navigationController = UINavigationController()
         coordinator = AppCoordinator(navigationController: navigationController)
         coordinator?.start()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+    }
+
+    private func applyTheme() {
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        window?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

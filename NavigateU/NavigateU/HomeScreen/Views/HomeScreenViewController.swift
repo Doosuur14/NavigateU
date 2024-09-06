@@ -29,6 +29,7 @@ final class HomeScreenViewController: UIViewController, HomeViewDelegate {
         homeScreenView = HomeScreenView(frame: view.bounds)
         view = homeScreenView
         homeScreenView?.secondView.delegate = self
+        homeScreenView?.backgroundColor = .systemBackground
     }
 
     func alreadyRegisteredaction() {

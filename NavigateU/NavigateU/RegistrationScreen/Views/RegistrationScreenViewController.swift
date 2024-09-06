@@ -34,7 +34,7 @@ class RegistrationScreenViewController<ViewModel:
         registrationView = RegistrationScreenView(frame: view.bounds)
         registrationView?.delegate = self
         view = registrationView
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
     }
     private func configureIO() {
         viewModel.stateDidChangeForReg.receive(on: DispatchQueue.main)

@@ -66,7 +66,7 @@ final class LikedArticleCell: UITableViewCell {
     private func setupContentDescription() {
         addSubview(contentDescription)
         contentDescription.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        contentDescription.textColor = .black
+        contentDescription.textColor = .label
         contentDescription.backgroundColor = .clear
         contentDescription.isEditable = false
         contentDescription.isScrollEnabled = false

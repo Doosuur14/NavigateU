@@ -40,7 +40,7 @@ class EditProfileViewController: UIViewController, EditProfileDelegate {
         editProfileView = EditProfileView(frame: view.bounds)
         view = editProfileView
         editProfileView?.delegate = self
-        editProfileView?.backgroundColor = .white
+        editProfileView?.backgroundColor = .systemBackground
     }
 
     private func loadPage() {

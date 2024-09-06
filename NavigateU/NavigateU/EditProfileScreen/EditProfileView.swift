@@ -171,12 +171,12 @@ extension EditProfileView: UITextFieldDelegate {
     }
 }
 
-    struct UserData {
-        let firstname: String?
-        let lastname: String?
-        let emailText: String?
-        let passwordText: String?
-        let country: String?
-        let city: String?
-    }
+struct UserData {
+    let firstname: String?
+    let lastname: String?
+    let emailText: String?
+    let passwordText: String?
+    let country: String?
+    let city: String?
+}
 
