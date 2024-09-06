@@ -11,6 +11,13 @@ protocol LoginViewDelegate: AnyObject {
     func didPressLoginButton()
 }
 
+enum AccessibilityIdentifiers {
+    static let emailTextField = "email"
+    static let passwordTextField = "password"
+    static let infoTitleLabel = "info_title_label"
+    static let infoLabel = "info_label"
+}
+
 final class LoginView: UIView {
 
     lazy var appName: UILabel = UILabel()
@@ -61,6 +68,7 @@ final class LoginView: UIView {
         addSubview(email)
         email.placeholder = "Email"
         email.backgroundColor = .clear
+        email.accessibilityIdentifier = AccessibilityIdentifiers.emailTextField
         email.borderStyle = .roundedRect
         email.autocapitalizationType = .none
         email.textColor = UIColor(named: "SubtitleColor")
