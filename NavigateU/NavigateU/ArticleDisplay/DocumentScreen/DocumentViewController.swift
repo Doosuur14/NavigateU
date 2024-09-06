@@ -49,21 +49,19 @@ class DocumentViewController: UIViewController {
         view = document
         view.backgroundColor = .systemBackground
         document?.title.text = article.title
-        if let url = URL(string: article.imageURL ?? "") {
-            URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-                guard let self = self else { return }
-                if let error = error {
-                    print("Error loading image: \(error)")
-                    return
-                }
-                guard let data = data else {
-                    print("No image data available")
-                    return
-                }
+        if let imageUrlString = article.imageURL, let url = URL(string: imageUrlString) {
+            ImageService.shared.loadImage(from: url) { [weak self] result in
                 DispatchQueue.main.async {
-                    self.document?.image.image = UIImage(data: data) ?? UIImage(systemName: "person")
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let data):
+                        self.document?.image.image = UIImage(data: data) ?? UIImage(systemName: "person")
+                    case .failure(let error):
+                        print("Error loading image: \(error)")
+                        self.document?.image.image = UIImage(systemName: "person")
+                    }
                 }
-            }.resume()
+            }
         }
         document?.content.text = article.content
         document?.delegate = self
@@ -83,6 +81,7 @@ extension DocumentViewController: LikeButtonDelegate {
             }
             document?.likeCount.text = article.likes
     }
+    
     func didtapLikeButton() {
         if isLiked {
             documentLocalDataSource.unlikeArticle(article: article) { [weak self] result in

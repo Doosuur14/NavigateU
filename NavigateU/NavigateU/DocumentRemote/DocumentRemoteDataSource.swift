@@ -14,9 +14,12 @@ protocol DocumentRemoteDataSourceProtocol {
     func fetchArticleDetails(articleId: Int, completion: @escaping (Result<ArticleResponse, Error>) -> Void)
     func saveArticlesToCoreData(articleResponses: [ArticleResponse], completion: @escaping (Result<[Article], Error>) -> Void) async
     func saveArticleDetailToCoreData(articleResponse: ArticleResponse, completion: @escaping (Result<Article, Error>) -> Void) async
+    func fetchContent(completion: @escaping (Result<[ContentResponse], Error>) -> Void)
+    func fetchQuestions(completion: @escaping (Result<[QuestionResponse], any Error>) -> Void)
 }
 
 class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
+    static let shared = DocumentRemoteDataSource()
 
     private var articles: [ArticleResponse] = []
 
@@ -68,8 +71,8 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
         }
     }
 
-     func saveArticleDetailToCoreData(articleResponse: ArticleResponse,
-                                      completion: @escaping (Result<Article, Error>) -> Void) async {
+    func saveArticleDetailToCoreData(articleResponse: ArticleResponse,
+                                     completion: @escaping (Result<Article, Error>) -> Void) async {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         await context.perform {
             do {
@@ -83,6 +86,28 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
                 completion(.success(article))
             } catch {
                 context.rollback()
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchContent(completion: @escaping (Result<[ContentResponse], any Error>) -> Void) {
+        AF.request("http://localhost:8080/contents").responseDecodable(of: [ContentResponse].self) { response in
+            switch response.result {
+            case .success(let content):
+                completion(.success(content))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchQuestions(completion: @escaping (Result<[QuestionResponse], any Error>) -> Void) {
+        AF.request("http://localhost:8080/questions").responseDecodable(of: [QuestionResponse].self) { response in
+            switch response.result {
+            case .success(let question):
+                completion(.success(question))
+            case .failure(let error):
                 completion(.failure(error))
             }
         }
