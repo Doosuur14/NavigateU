@@ -6,9 +6,12 @@
 //
 
 import UIKit
-import SnapKit
 
-class LoginView: UIView {
+protocol LoginViewDelegate: AnyObject {
+    func didPressLoginButton()
+}
+
+final class LoginView: UIView {
 
     lazy var appName: UILabel = UILabel()
     lazy var email: UITextField = UITextField()
@@ -22,21 +25,28 @@ class LoginView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpAppName()
-        setUpEmail()
-        setUpPassword()
-        setUpLoginButton()
-        setUpRedirect()
-        setUpGoogle()
-        setUpGoogleImage()
-        setUpTerms()
-        setUpConditions()
+        setUpFunctions()
+
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setUpAppName() {
+    weak var delegate: LoginViewDelegate?
+
+    private func setUpFunctions() {
+        setupAppName()
+        setupEmail()
+        setupPassword()
+        setupLoginButton()
+        setupRedirect()
+        setupGoogle()
+        setupGoogleImage()
+        setupTerms()
+        setupConditions()
+    }
+
+    private func setupAppName() {
         addSubview(appName)
         appName.text = "NavigateU"
         appName.font = UIFont.systemFont(ofSize: 30, weight: .medium)
@@ -44,55 +54,61 @@ class LoginView: UIView {
         appName.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-10)
             make.centerX.equalToSuperview()
-           // make.leading.equalToSuperview().offset(130)
         }
     }
 
-    private func setUpEmail() {
+    private func setupEmail() {
         addSubview(email)
         email.placeholder = "Email"
         email.backgroundColor = .clear
         email.borderStyle = .roundedRect
+        email.autocapitalizationType = .none
         email.textColor = UIColor(named: "SubtitleColor")
         email.snp.makeConstraints { make in
             make.top.equalTo(appName.snp.bottom).offset(70)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
     }
 
-    private func setUpPassword() {
+    private func setupPassword() {
         addSubview(password)
         password.placeholder = "Password"
         password.backgroundColor = .clear
+        password.textContentType = .password
+        password.isSecureTextEntry = true
         password.borderStyle = .roundedRect
         password.textColor = UIColor(named: "SubtitleColor")
         password.snp.makeConstraints { make in
             make.top.equalTo(email.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
     }
 
-    private func setUpLoginButton() {
+    private func setupLoginButton() {
         addSubview(login)
         login.setTitle("Login", for: .normal)
         login.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
         login.isEnabled = true
         login.backgroundColor = UIColor(named: "CustomColor")
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.didPressLoginButton()
+        }
+        login.addAction(action, for: .touchUpInside)
         login.clipsToBounds = true
         login.layer.cornerRadius = 10
         login.snp.makeConstraints { make in
             make.top.equalTo(password.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
     }
 
-    private func setUpRedirect() {
+    private func setupRedirect() {
         addSubview(redirect)
         redirect.text = "or"
         redirect.textColor = UIColor(named: "SubtitleColor")
@@ -103,7 +119,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpGoogle() {
+    private func setupGoogle() {
         addSubview(continueWithGoogle)
         continueWithGoogle.setTitle("Continue With Google", for: .normal)
         continueWithGoogle.setTitleColor(.color3, for: .normal)
@@ -115,13 +131,13 @@ class LoginView: UIView {
         continueWithGoogle.snp.makeConstraints { make in
             make.top.equalTo(redirect.snp.bottom).offset(50)
             make.leading.equalToSuperview().offset(16)
-            make.width.equalTo(360)
+            make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
 
     }
 
-    private func setUpTerms() {
+    private func setupTerms() {
         addSubview(termsAndConditions)
         termsAndConditions.text = "By continuing, you agree to Navigate U’s"
         termsAndConditions.textColor = UIColor(named: "SubtitileColor")
@@ -132,11 +148,13 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpConditions() {
+    private func setupConditions() {
         addSubview(conditions)
 
         let attributedString = NSMutableAttributedString(string: "Terms of Service and Privacy Policy")
-        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(.underlineStyle,
+                                      value: NSUnderlineStyle.single.rawValue,
+                                      range: NSRange(location: 0, length: attributedString.length))
         conditions.attributedText = attributedString
         conditions.text = "Terms of Service and Privacy Policy"
         conditions.textColor = UIColor(named: "SubtitleColor")
@@ -147,7 +165,7 @@ class LoginView: UIView {
         }
     }
 
-    private func setUpGoogleImage() {
+    private func setupGoogleImage() {
         addSubview(googleImage)
         googleImage.image = UIImage(named: "googleimage")
         googleImage.alpha = 0.5
@@ -155,7 +173,18 @@ class LoginView: UIView {
         googleImage.snp.makeConstraints { make in
             make.edges.equalTo(continueWithGoogle).inset(15)
             make.leading.equalToSuperview().offset(-200)
-
         }
+    }
+}
+
+extension LoginView: UITextFieldDelegate {
+
+    func configureSignInForm() -> (String?, String?)? {
+        let emailText = email.isEmptyTextField()
+        let passwordText = password.isEmptyTextField()
+        if emailText || passwordText {
+            return nil
+        }
+        return (email.text, password.text)
     }
 }

@@ -10,15 +10,24 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    //var coordinator: Coordinator?
+    var coordinator: AppCoordinator?
 
+    func scene(_ scene: UIScene, willConnectTo session:
+               UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        UserDefaults.standard.removeObject(forKey: "curUser")
+        print("UserDefaults curUser key cleared for testing")
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let viewController = HomeScreenViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
         window = UIWindow(windowScene: windowScene)
+//        let navigationController = UINavigationController()
+//        coordinator = AppCoordinator(navigationController: navigationController)
+//        coordinator?.start()
+        let navigationController = UINavigationController()
+        coordinator = AppCoordinator(navigationController: navigationController)
+        coordinator?.start()
         window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()   
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -48,7 +57,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-

@@ -20,4 +20,3 @@ protocol ViewModel: ObservableObject where ObjectWillChangePublisher.Output == V
 protocol UIKitViewModel: ViewModel {
     var stateDidChangeForLog: ObservableObjectPublisher { get }
 }
-

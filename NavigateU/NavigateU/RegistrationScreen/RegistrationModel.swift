@@ -8,9 +8,16 @@
 import Foundation
 import Combine
 
-protocol RegistrationViewModelProtocol: RegViewModel where State == RegisterViewState, Intent == RegisterIntent {}
+protocol RegistrationViewModelProtocol: RegViewModel where State == RegisterViewState, Intent == RegisterIntent {
+}
+
+protocol SignUpOutput: AnyObject {
+    func goToLoginController()
+    func signedUpUser()
+}
 
 final class RegistrationModel: RegistrationViewModelProtocol {
+    weak var delegate: SignUpOutput?
     var stateDidChangeForReg =  ObservableObjectPublisher()
 
     @Published private(set) var state: RegisterViewState {
@@ -25,16 +32,25 @@ final class RegistrationModel: RegistrationViewModelProtocol {
         self.state = .initial
     }
 
-    func register(_ intent: RegisterIntent, firstName: String, lastName: String, email: String, password: String, countryOfOrigin: String, cityOfResidence: String) {
+    func register(_ intent: RegisterIntent, firstName: String,
+                  lastName: String,
+                  email: String,
+                  password: String,
+                  countryOfOrigin: String,
+                  cityOfResidence: String) {
         switch intent {
         case .didTapRegisterButton:
-                AuthService.shared.register(firstName: firstName, lastName: lastName,
-                                            email:email, password: password, countryOfOrigin: countryOfOrigin,
+                AuthService.shared.register(firstName: firstName,
+                                            lastName: lastName,
+                                            email: email,
+                                            password: password,
+                                            countryOfOrigin: countryOfOrigin,
                                             cityOfResidence: cityOfResidence) { [weak self] result in
                     switch result {
                     case .success:
                         print("User was registered successfully")
                         self?.state = .isregisteredSuccessfully
+                        self?.delegate?.signedUpUser()
                     case .failure:
                         print("There was a problem while registering the user")
                         self?.state = .registrationFailed
@@ -42,4 +58,8 @@ final class RegistrationModel: RegistrationViewModelProtocol {
                 }
             }
         }
+
+    func goToLoginController() {
+        delegate?.goToLoginController()
     }
+}

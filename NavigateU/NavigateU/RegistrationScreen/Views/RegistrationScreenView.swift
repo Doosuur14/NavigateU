@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol RegistrationDelegate: AnyObject {
+    func didPressRegButton()
+}
+
 final class RegistrationScreenView: UIView {
 
     lazy var appName: UILabel = UILabel()
@@ -19,6 +23,8 @@ final class RegistrationScreenView: UIView {
     lazy var terms: UILabel = UILabel()
     lazy var conditions: UILabel = UILabel()
     lazy var registerButton: UIButton = UIButton()
+
+    weak var delegate: RegistrationDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -168,12 +174,47 @@ final class RegistrationScreenView: UIView {
         registerButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
         registerButton.backgroundColor = UIColor(named: "CustomColor")
         registerButton.clipsToBounds = true
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.didPressRegButton()
+        }
+        registerButton.addAction(action, for: .touchUpInside)
         registerButton.layer.cornerRadius = 10
         registerButton.snp.makeConstraints { make in
             make.top.equalTo(conditions.snp.bottom).offset(50)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
-       }   
+        }
     }
+}
+
+extension RegistrationScreenView: UITextFieldDelegate {
+    func configureSignUpForm() -> UserRegistrationData? {
+        let isFirstNameEmpty = firstName.isEmptyTextField()
+        let isLastNameEmpty = lastName.isEmptyTextField()
+        let isEmailEmpty = email.isEmptyTextField()
+        let isPasswordEmpty = password.isEmptyTextField()
+        let isCountryEmpty = countryOfOrigin.isEmptyTextField()
+        let isCityEmpty = cityOfResidence.isEmptyTextField()
+        if isEmailEmpty || isPasswordEmpty || isFirstNameEmpty || isLastNameEmpty || isCountryEmpty || isCityEmpty  {
+            return nil
+        }
+        return UserRegistrationData(
+            firstname: firstName.text,
+            lastname: lastName.text,
+            emailText: email.text,
+            passwordText: password.text,
+            country: countryOfOrigin.text,
+            city: cityOfResidence.text
+        )
+    }
+}
+
+struct UserRegistrationData {
+    let firstname: String?
+    let lastname: String?
+    let emailText: String?
+    let passwordText: String?
+    let country: String?
+    let city: String?
 }

@@ -15,7 +15,13 @@ protocol RegistrationProtocol: ObservableObject where ObjectWillChangePublisher.
 
     var state: State { get }
 
-    func register(_ intent: Intent, firstName: String, lastName: String, email: String, password: String, countryOfOrigin: String, cityOfResidence: String)
+    func register(_ intent: Intent,
+                  firstName: String,
+                  lastName: String,
+                  email: String,
+                  password: String,
+                  countryOfOrigin: String,
+                  cityOfResidence: String)
 }
 
 protocol RegViewModel: RegistrationProtocol {

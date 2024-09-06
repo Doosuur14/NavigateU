@@ -8,18 +8,17 @@
 import UIKit
 import Combine
 
-class RegistrationScreenViewController<ViewModel: RegistrationViewModelProtocol>: UIViewController {
+class RegistrationScreenViewController<ViewModel:
+                                            RegistrationViewModelProtocol>: UIViewController, RegistrationDelegate {
+
     var registrationView: RegistrationScreenView?
     let viewModel: ViewModel
-    private var coordinator: AuthFlowCoordinator?
     private var cancellables: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        coordinator = AuthFlowCoordinator(rootViewController: navigationController ?? UINavigationController())
         configureIO()
-        registrationView?.registerButton.addTarget(self, action:#selector(registerButtonTapped), for: .touchUpInside)
     }
 
     init(viewModel: ViewModel) {
@@ -33,20 +32,10 @@ class RegistrationScreenViewController<ViewModel: RegistrationViewModelProtocol>
 
     private func setUpView() {
         registrationView = RegistrationScreenView(frame: view.bounds)
+        registrationView?.delegate = self
         view = registrationView
         view.backgroundColor = .white
     }
-
-    @objc func registerButtonTapped() {
-        guard let firstName = registrationView?.firstName.text,
-                let lastName = registrationView?.lastName.text,
-              let email = registrationView?.email.text,
-              let password = registrationView?.password.text,
-              let countryOfOrigin = registrationView?.countryOfOrigin.text,
-              let cityOfResidence = registrationView?.cityOfResidence.text else {return }
-        viewModel.register(.didTapRegisterButton, firstName: firstName, lastName: lastName, email: email, password: password, countryOfOrigin: countryOfOrigin, cityOfResidence: cityOfResidence)
-    }
-
     private func configureIO() {
         viewModel.stateDidChangeForReg.receive(on: DispatchQueue.main)
             .sink { [weak self]  in
@@ -54,17 +43,28 @@ class RegistrationScreenViewController<ViewModel: RegistrationViewModelProtocol>
             }
             .store(in: &cancellables)
     }
-    
+
     private func render() {
         switch viewModel.state {
         case.initial:
             print("Application is running")
         case.isregisteredSuccessfully:
-            coordinator?.toLoginScreen()
             print("registration was successful")
         case .registrationFailed:
             AlertManager.shared.showRegistrationFailedAlert(viewCon: self)
             break
         }
+    }
+    func didPressRegButton() {
+        guard let form = registrationView?.configureSignUpForm() else {
+            AlertManager.shared.showEmptyFieldAlert(viewCon: self)
+            return
+        }
+        viewModel.register(.didTapRegisterButton, firstName: form.firstname ?? "",
+                           lastName: form.lastname ?? "",
+                           email: form.emailText ?? "",
+                           password: form.passwordText ?? "",
+                           countryOfOrigin: form.country ?? "",
+                           cityOfResidence: form.city ?? "")
     }
 }

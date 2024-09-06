@@ -12,4 +12,3 @@ enum MainViewState {
     case isloggedSuccessfully
     case loginFailed
 }
-
