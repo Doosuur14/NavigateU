@@ -1,0 +1,11 @@
+
+{
+  "request": {
+      "method": "GET",
+      "url": "/articles/4"
+  },
+  "response": {
+      "status": 200,
+      "bodyFileName": "article4.json"
+  }
+}
