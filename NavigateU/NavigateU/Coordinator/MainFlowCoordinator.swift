@@ -15,11 +15,11 @@ protocol MainFlowCoordinatorProtocol: AnyObject {
 class MainFlowCoordinator: Coordinator {
 
     var navigationController: UINavigationController
-    private var mainFlowCoordinatorProtocol: MainFlowCoordinatorProtocol?
+    private var mainFlowCoordinatorOutput: MainFlowCoordinatorProtocol?
 
-    init(navigationController: UINavigationController, mainFlowCoordinatorProtocol: MainFlowCoordinatorProtocol) {
+    init(navigationController: UINavigationController, mainFlowCoordinatorOutput: MainFlowCoordinatorProtocol) {
         self.navigationController = navigationController
-        self.mainFlowCoordinatorProtocol = mainFlowCoordinatorProtocol
+        self.mainFlowCoordinatorOutput = mainFlowCoordinatorOutput
     }
 
     func start() {
@@ -37,6 +37,5 @@ class MainFlowCoordinator: Coordinator {
         tabBarController.tabBar.tintColor = UIColor(named: "CustomColor")
         tabBarController.tabBar.backgroundColor = .systemGray6
         navigationController.setViewControllers([tabBarController], animated: true)
-
     }
 }

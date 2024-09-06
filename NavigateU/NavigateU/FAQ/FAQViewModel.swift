@@ -10,8 +10,11 @@ import UIKit
 
 class FAQViewModel {
     private var content: [Question] = []
+    var documentRemoteDataSource: DocumentRemoteDataSourceProtocol
+    var reloadTableView: (() -> Void)?
 
-    init() {
+    init(documentRemoteDataSource: DocumentRemoteDataSourceProtocol = DocumentRemoteDataSource.shared) {
+        self.documentRemoteDataSource = documentRemoteDataSource
         setupMockData()
     }
 
@@ -33,18 +36,19 @@ class FAQViewModel {
     }
 
     private func setupMockData() {
-        content = [ Question(title: "How can I like an article?",
-                             answer: "To like an article, simply tap the heart icon at the bottom of the article. You can view all your liked articles in the 'Favorites' section."),
-                    Question(title: "How do I edit my profile?",
-                             answer: "To edit your profile, go to the 'Profile' tab and tap the 'Edit Profile' button. From there, you can update your personal information and profile picture."),
-                    Question(title: "How do I switch to dark theme?",
-                             answer: "You can switch to dark theme by going to the app settings and toggling the 'Dark Theme' option. The app will instantly switch to a darker color scheme."),
-                    Question(title: "How can I create an article?",
-                             answer: "To create an article, go to the 'Create' tab and fill in the title and content fields. Once you're ready, tap 'Submit' to publish your article."),
-                    Question(title: "How can I rate an article?",
-                             answer: "To rate an article, scroll to the bottom of the article and select the number of stars you wish to give. You can also leave a comment along with your rating."),
-                    Question(title: "What should I do if I encounter issues?",
-                             answer: "If you encounter any issues or have questions, please contact our support team through the 'Help & Support' section in the app settings.")
-        ]
+        documentRemoteDataSource.fetchQuestions { [weak self] result in
+            switch result {
+            case .success(let questionResponses):
+                self?.content = questionResponses.map { question in
+                    Question(title: question.title, answer: question.answer)
+
+                }
+                DispatchQueue.main.async {
+                    self?.reloadTableView?()
+                }
+            case .failure(let error):
+                print("Error fetching content: \(error)")
+            }
+        }
     }
 }

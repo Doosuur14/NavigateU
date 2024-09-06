@@ -19,6 +19,7 @@ final class MainScreenView: UIView {
         setUpTableView()
         setUpLabel()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,9 +61,11 @@ final class MainScreenView: UIView {
             make.centerY.equalToSuperview()
         }
     }
+
     func setupDataSource(with dataSource: UITableViewDataSource) {
         self.tableView.dataSource = dataSource
     }
+
     func setupDelegate(with delegate: UITableViewDelegate) {
         self.tableView.delegate = delegate
     }

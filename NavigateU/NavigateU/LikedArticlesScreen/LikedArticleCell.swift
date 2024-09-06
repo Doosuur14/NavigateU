@@ -8,20 +8,20 @@
 import UIKit
 
 final class LikedArticleCell: UITableViewCell {
-
+    
     private lazy var contentImage: UIImageView = UIImageView()
     private lazy var contentTitle: UILabel = UILabel()
     private lazy var contentDescription: UITextView = UITextView()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpfunc()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func configureCell(with article: Article) {
         if let url = URL(string: article.imageURL ?? "") {
             URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
@@ -41,9 +41,9 @@ final class LikedArticleCell: UITableViewCell {
         }
         contentTitle.text = article.title
         contentDescription.text = article.content
-
+        
     }
-
+    
     private func setupContentImage() {
         addSubview(contentImage)
         contentImage.layer.cornerRadius = 10
@@ -54,6 +54,7 @@ final class LikedArticleCell: UITableViewCell {
             make.height.equalTo(300)
         }
     }
+    
     private func setupContentTitle() {
         addSubview(contentTitle)
         contentTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -63,6 +64,7 @@ final class LikedArticleCell: UITableViewCell {
             make.height.equalTo(25)
         }
     }
+    
     private func setupContentDescription() {
         addSubview(contentDescription)
         contentDescription.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -77,6 +79,7 @@ final class LikedArticleCell: UITableViewCell {
             make.bottom.equalToSuperview().inset(16)
         }
     }
+    
     private func setUpfunc() {
         setupContentImage()
         setupContentTitle()

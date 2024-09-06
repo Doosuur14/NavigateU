@@ -11,12 +11,12 @@ import CoreData
 import FirebaseAuth
 
 class EditProfileViewModel {
-    var firstName: String?
-    var lastName: String?
-    var email: String?
-    var password: String?
-    var cityOfResidence: String?
-    var nationality: String?
+    @Published var firstName: String?
+    @Published var lastName: String?
+    @Published var email: String?
+    @Published var password: String?
+    @Published var cityOfResidence: String?
+    @Published var nationality: String?
 
     var onProfileDetails: (() -> Void)?
     var onProfileUpdated: (() -> Void)?

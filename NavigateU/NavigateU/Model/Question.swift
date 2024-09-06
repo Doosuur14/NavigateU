@@ -11,3 +11,9 @@ struct Question {
     let title: String
     let answer: String
 }
+
+struct QuestionResponse: Decodable {
+    let id: Int
+    let title: String
+    let answer: String
+}

@@ -25,5 +25,11 @@ extension Article {
         self.content = articleResponse.content
         self.likes = articleResponse.likes
     }
+    func update(with response: ArticleResponse) {
+        self.title = response.title
+        self.content = response.content
+        self.imageURL = response.imageURL
+        self.likes = response.likes
+    }
 }
 

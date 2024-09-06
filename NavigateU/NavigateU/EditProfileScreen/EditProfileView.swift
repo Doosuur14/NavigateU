@@ -179,4 +179,3 @@ struct UserData {
     let country: String?
     let city: String?
 }
-

@@ -9,12 +9,10 @@ import Foundation
 import UIKit
 
 class HomeModuleBuilder {
-
     func buildHomepage(output: StartOutput) -> UIViewController {
         let viewModel = HomeViewModel()
         viewModel.delegate = output
         let viewController = HomeScreenViewController(viewModel: viewModel)
         return viewController
     }
-
 }

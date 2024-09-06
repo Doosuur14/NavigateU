@@ -11,22 +11,37 @@ final class MainTableViewCell: UITableViewCell {
 
     private lazy var contentImage: UIImageView = UIImageView()
     private lazy var contentTitle: UILabel = UILabel()
-    private lazy var contentSubtitle: UILabel = UILabel()
+
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpfunc()
     }
 
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureCell(with content: Content) {
-        contentImage.image = content.photo
-        contentTitle.text = content.title
-        contentSubtitle.text = content.subTitle
 
+    func configureCell(with content: Content) {
+        guard let url = URL(string: content.photoName) else { return }
+        let cellTag = self.tag
+        ImageService.shared.loadImage(from: url) { [weak self] result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    if let image = UIImage(data: data) {
+                        if self?.tag == cellTag {
+                            self?.contentImage.image = image
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Error loading image: \(error)")
+            }
+        }
+        contentTitle.text = content.title
     }
 
     private func setupContentImage() {
@@ -39,6 +54,7 @@ final class MainTableViewCell: UITableViewCell {
             make.height.equalTo(300)
         }
     }
+    
     private func setupContentTitle() {
         addSubview(contentTitle)
         contentTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -48,19 +64,10 @@ final class MainTableViewCell: UITableViewCell {
             make.height.equalTo(25)
         }
     }
-    private func setupContentSubtitle() {
-        addSubview(contentSubtitle)
-        contentSubtitle.font = UIFont.systemFont(ofSize: 15, weight: .light)
-        contentSubtitle.snp.makeConstraints { make in
-            make.leading.equalTo(16)
-            make.top.equalTo(contentTitle.snp.bottom).offset(3)
-            make.height.equalTo(20)
-        }
-    }
+
     private func setUpfunc() {
         setupContentImage()
         setupContentTitle()
-        setupContentSubtitle()
     }
 }
 

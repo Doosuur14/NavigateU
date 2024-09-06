@@ -6,11 +6,17 @@
 //
 
 import UIKit
+import Combine
 
-class EditProfileViewController: UIViewController, EditProfileDelegate {
+protocol EditProfileModuleProtocol: AnyObject {
+    var editProfileView: EditProfileView? { get set }
+    var viewModel: EditProfileViewModel { get }
+}
 
+class EditProfileViewController: UIViewController, EditProfileDelegate, EditProfileModuleProtocol {
     var editProfileView: EditProfileView?
-    let viewModel: EditProfileViewModel
+    var viewModel: EditProfileViewModel
+    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel:EditProfileViewModel) {
         self.viewModel = viewModel
@@ -21,15 +27,15 @@ class EditProfileViewController: UIViewController, EditProfileDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         viewModel.fetchUserProfile()
         viewModel.onProfileDetails = { [weak self] in
-            self?.loadPage()
+            self?.bindViewModel()
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.fetchUserProfile()
@@ -43,14 +49,49 @@ class EditProfileViewController: UIViewController, EditProfileDelegate {
         editProfileView?.backgroundColor = .systemBackground
     }
 
-    private func loadPage() {
-        self.editProfileView?.firstName.text = self.viewModel.firstName
-        self.editProfileView?.lastName.text = self.viewModel.lastName
-        self.editProfileView?.email.text = self.viewModel.email
-        self.editProfileView?.password.text = self.viewModel.password
-        self.editProfileView?.cityOfResidence.text = self.viewModel.cityOfResidence
-        self.editProfileView?.countryOfOrigin.text = self.viewModel.nationality
+    private func bindViewModel() {
+        viewModel.$firstName
+            .receive(on: DispatchQueue.main )
+            .sink { [weak self] newValue in
+                self?.editProfileView?.firstName.text = newValue
+            }
+            .store(in: &cancellables)
+        viewModel.$lastName
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                self?.editProfileView?.lastName.text = newValue
+            }
+            .store(in: &cancellables)
+
+        viewModel.$email
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                self?.editProfileView?.email.text = newValue
+            }
+            .store(in: &cancellables)
+
+        viewModel.$password
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                self?.editProfileView?.password.text = newValue
+            }
+            .store(in: &cancellables)
+
+        viewModel.$cityOfResidence
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                self?.editProfileView?.cityOfResidence.text = newValue
+            }
+            .store(in: &cancellables)
+
+        viewModel.$nationality
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                self?.editProfileView?.countryOfOrigin.text = newValue
+            }
+            .store(in: &cancellables)
     }
+    
 
     func didTapSaveButton() {
 
@@ -70,10 +111,10 @@ class EditProfileViewController: UIViewController, EditProfileDelegate {
                 self.editProfileView?.password.text = ""
             case .failure:
                 AlertManager.shared.showUpdateFailureAlert(viewCon: self)
-
             }
         }
     }
+
 
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
