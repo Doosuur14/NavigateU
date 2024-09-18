@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ProfileViewDelegate {
 
     var profileView: ProfileView?
     let viewModel: ProfileViewModel
+    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
@@ -49,16 +51,35 @@ final class ProfileViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
 
-
     private func setupBindings() {
-        profileView?.firstName.text = viewModel.firstName
-        profileView?.lastName.text = viewModel.lastName
-        profileView?.userEmail.text = viewModel.email
-        if let profileImage = viewModel.profileImage {
-            self.profileView?.avatarImage.image = profileImage
-        }
-        self.profileView?.tableView.reloadData()
+        viewModel.$firstName
+            .receive(on: DispatchQueue.main )
+            .sink { [weak self] newValue in
+                self?.profileView?.firstName.text = newValue
+            }
+            .store(in: &cancellables)
+        viewModel.$lastName
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                self?.profileView?.lastName.text = newValue
+            }
+            .store(in: &cancellables)
+
+        viewModel.$email
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                self?.profileView?.userEmail.text = newValue
+            }
+            .store(in: &cancellables)
+        viewModel.$profileImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newImage in
+                self?.profileView?.avatarImage.image = newImage
+                self?.profileView?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
     }
+
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {

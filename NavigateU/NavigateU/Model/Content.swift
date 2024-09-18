@@ -9,7 +9,16 @@ import Foundation
 import UIKit
 
  struct Content {
-     let photo: UIImage?
+     let id: Int
+     let photoName: String
      let title: String
-     let subTitle: String
+
+     var photo: UIImage? {
+         return UIImage(named: photoName)
+     }
+}
+struct ContentResponse: Decodable {
+    let id: Int
+    let imageUrl: String
+    let title: String
 }

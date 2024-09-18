@@ -51,11 +51,12 @@ final class MainScreenViewController: UIViewController, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         viewModel.configureCell(tableView, cellForRowAt: indexPath)
-
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
-        let articleId = indexPath.row + 1
+        let selectedContent = viewModel.filteredContent[indexPath.row]
+        let articleId = selectedContent.id
         remoteDataSource.fetchArticleDetails(articleId: articleId) { [weak self] result in
             switch result {
             case .success(let articleResponse):
@@ -66,31 +67,47 @@ final class MainScreenViewController: UIViewController, UITableViewDataSource,
 
                     if let existingArticles = try? context.fetch(articleFetchRequest),
                        let existingArticle = existingArticles.first {
-                        let documentVC = DocumentViewController(article: existingArticle)
-                        self?.mainView?.tableView.reloadData()
-                        self?.navigationController?.pushViewController(documentVC, animated: true)
+                        existingArticle.update(with: articleResponse)
                     } else {
-                        let article = Article(articleResponse: articleResponse, context: context)
-                        let documentVC = DocumentViewController(article: article)
-                        self?.mainView?.tableView.reloadData()
-                        self?.navigationController?.pushViewController(documentVC, animated: true)
+                        _ = Article(articleResponse: articleResponse, context: context)
                     }
+                    try? context.save()
+                    let article = Article(articleResponse: articleResponse, context: context)
+                    let documentVC = DocumentViewController(article: article)
+                    self?.navigationController?.pushViewController(documentVC, animated: true)
                 }
+
             case .failure(let error):
                 print("Error fetching article details for specific section: \(error)")
+                DispatchQueue.main.async {
+                    let context = CoreDataManager.shared.persistentContainer.viewContext
+                    let articleFetchRequest: NSFetchRequest<Article> = Article.fetchRequest()
+                    articleFetchRequest.predicate = NSPredicate(format: "id == %d", articleId)
+
+                    if let existingArticles = try? context.fetch(articleFetchRequest),
+                       let existingArticle = existingArticles.first {
+                        let documentVC = DocumentViewController(article: existingArticle)
+                        self?.navigationController?.pushViewController(documentVC, animated: true)
+                    } else {
+                        print("No local data available for article id: \(articleId)")
+                    }
+                }
             }
         }
-   }
+    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         CGFloat(viewModel.heightForRowAt())
     }
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel.searchPost(searchText)
     }
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.cancelButtonClicked()
     }
+    
     private func updateNoResultsLabel() {
         mainView?.label.isHidden = viewModel.numberOfRowsInSection() != 0
     }

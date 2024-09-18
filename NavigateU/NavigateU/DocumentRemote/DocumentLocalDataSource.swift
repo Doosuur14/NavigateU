@@ -19,7 +19,6 @@ protocol DocumentLocalDataSourceProtocol {
     func removeDuplicateArticles()
 
     var articleLiked: Bool { get set }
-    var articleUnliked: Bool { get set }
     var articleLikedPublisher: Published<Bool>.Publisher { get }
     var articleUnlikedPublisher: Published<Bool>.Publisher { get }
 }
@@ -27,11 +26,10 @@ protocol DocumentLocalDataSourceProtocol {
 class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
     static let shared = DocumentLocalDataSource()
     @Published var articleLiked: Bool = false
-    @Published var articleUnliked: Bool = false
 
 
     var articleLikedPublisher: Published<Bool>.Publisher { $articleLiked }
-    var articleUnlikedPublisher: Published<Bool>.Publisher { $articleUnliked }
+    var articleUnlikedPublisher: Published<Bool>.Publisher { $articleLiked }
 
     private var context: NSManagedObjectContext {
         return CoreDataManager.shared.persistentContainer.viewContext
@@ -120,7 +118,7 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
                         completion(.success(()))
                     } else {
                         print("Article already liked.")
-                        self.articleUnliked = false
+                        self.articleLiked = false
                         completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Article already liked"])))
                     }
                 } else {
@@ -152,10 +150,10 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
                         article.likes = String(likesInt - 1)
                     }
                     try self.context.save()
-                    self.articleUnliked = true
+                    self.articleLiked = false
                     completion(.success(()))
                 } else {
-                    self.articleUnliked = false
+                    self.articleLiked = true
                     completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Article not found in liked articles"])))
                 }
             } catch {

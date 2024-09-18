@@ -6,14 +6,18 @@
 //
 
 import UIKit
-import Combine
+
+protocol LikedArticleProtocol: AnyObject {
+    var likedArticleView: LikedArticleView? {get set}
+    var viewModel: LikedArticlesViewModel { get }
+
+}
 
 class LikedArticleViewController: UIViewController, UITableViewDataSource,
-                                  UITableViewDelegate, LikedarticleViewDelegate {
+                                  UITableViewDelegate, LikedarticleViewDelegate, LikedArticleProtocol {
 
     var likedArticleView: LikedArticleView?
     let viewModel: LikedArticlesViewModel
-    private var cancellables = Set<AnyCancellable>()
 
     init(likedArticleView: LikedArticleView? = nil, viewModel: LikedArticlesViewModel) {
         self.likedArticleView = likedArticleView
@@ -54,7 +58,6 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         viewModel.configureCell(tableView, cellForRowAt: indexPath)
-
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

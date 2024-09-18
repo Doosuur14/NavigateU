@@ -13,13 +13,13 @@ import CoreData
 
 class ProfileViewModel {
 
-    var firstName: String?
-    var lastName: String?
-    var email: String?
-    var password: String?
-    var cityOfResidence: String?
-    var nationality: String?
-    var profileImage: UIImage?
+    @Published var firstName: String?
+    @Published var lastName: String?
+    @Published var email: String?
+    @Published var password: String?
+    @Published var cityOfResidence: String?
+    @Published var nationality: String?
+    @Published var profileImage: UIImage?
     var onProfileUpdated: (() -> Void)?
     private var context: NSManagedObjectContext {
         return CoreDataManager.shared.persistentContainer.viewContext
@@ -77,6 +77,7 @@ class ProfileViewModel {
             self.onProfileUpdated?()
         }
     }
+
     func uploadProfilePhoto(_ image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser?.uid else { return }
         ProfileService.shared.uploadProfilePhoto(image) { result in
@@ -90,7 +91,6 @@ class ProfileViewModel {
             }
         }
     }
-
 
     private func updateUserProfileImageURL(_ urlString: String, for user: String) {
         guard let currentUser = Auth.auth().currentUser?.uid else { return }
