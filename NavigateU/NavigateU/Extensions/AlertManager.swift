@@ -15,7 +15,7 @@ import UIKit
         private init() {}
 
     // MARK: I am going to make the methods in this class static because  they belong to itself and there's no point of making  so many instances of alert manager class.
-     private  func showAlert(viewController: UIViewController, title: String, message: String?) {
+     private func showAlert(viewController: UIViewController, title: String, message: String?) {
         let alert =  UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
         viewController.present(alert, animated: true)

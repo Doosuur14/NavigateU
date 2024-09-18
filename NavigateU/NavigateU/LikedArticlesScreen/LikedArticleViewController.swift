@@ -32,12 +32,14 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchLikedArticles()
-        likedArticleView?.tableView.reloadData()
+        self.viewModel.fetchLikedArticles()
+        self.likedArticleView?.tableView.reloadData()
+        self.updateNoResultsLabel()
     }
 
     private func setupView() {
@@ -65,8 +67,10 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
     }
 
     func didPressSortButton() {
-        print("button pressed to sort.")
         viewModel.sortArticlesByLikes()
         likedArticleView?.tableView.reloadData()
+    }
+    private func updateNoResultsLabel() {
+         likedArticleView?.label.isHidden = viewModel.numberOfRowsInSection() != 0
     }
 }

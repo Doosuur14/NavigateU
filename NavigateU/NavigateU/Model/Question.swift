@@ -13,7 +13,6 @@ struct Question {
 }
 
 struct QuestionResponse: Decodable {
-    let id: Int
     let title: String
     let answer: String
 }

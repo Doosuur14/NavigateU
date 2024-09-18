@@ -57,7 +57,7 @@ class LikedArticleView: UIView {
 
     private func setupLabel() {
         addSubview(label)
-        label.text = "No Liked Found"
+        label.text = "No Liked Articles"
         label.textAlignment = .center
         label.textColor = UIColor(named: "SubtitleColor")
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)

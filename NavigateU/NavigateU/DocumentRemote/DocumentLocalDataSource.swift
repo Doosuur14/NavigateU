@@ -27,7 +27,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
     static let shared = DocumentLocalDataSource()
     @Published var articleLiked: Bool = false
 
-
     var articleLikedPublisher: Published<Bool>.Publisher { $articleLiked }
     var articleUnlikedPublisher: Published<Bool>.Publisher { $articleLiked }
 

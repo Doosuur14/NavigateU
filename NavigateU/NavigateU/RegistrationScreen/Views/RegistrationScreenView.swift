@@ -45,6 +45,7 @@ final class RegistrationScreenView: UIView {
         setUpTerms()
         setUpConditions()
         setUpRegisterButton()
+        addTapGestureToDismissKeyboard()
     }
 
     private func setUpAppname() {
@@ -63,6 +64,7 @@ final class RegistrationScreenView: UIView {
         firstName.placeholder = "First Name"
         firstName.backgroundColor = .clear
         firstName.borderStyle = .roundedRect
+        firstName.delegate = self
         firstName.textColor = UIColor(named: "SubtitleColor")
         firstName.snp.makeConstraints { make in
             make.top.equalTo(appName.snp.bottom).offset(50)
@@ -77,6 +79,7 @@ final class RegistrationScreenView: UIView {
         lastName.placeholder = "Last Name"
         lastName.backgroundColor = .clear
         lastName.borderStyle = .roundedRect
+        lastName.delegate = self
         lastName.textColor = UIColor(named: "SubtitleColor")
         lastName.snp.makeConstraints { make in
             make.top.equalTo(firstName.snp.bottom).offset(20)
@@ -93,6 +96,7 @@ final class RegistrationScreenView: UIView {
         email.backgroundColor = .clear
         email.autocapitalizationType = .none
         email.borderStyle = .roundedRect
+        email.delegate = self
         email.textColor = UIColor(named: "SubtitleColor")
         email.snp.makeConstraints { make in
             make.top.equalTo(lastName.snp.bottom).offset(20)
@@ -107,6 +111,7 @@ final class RegistrationScreenView: UIView {
         password.placeholder = "Password"
         password.backgroundColor = .clear
         password.borderStyle = .roundedRect
+        password.delegate = self
         password.textColor = UIColor(named: "SubtitleColor")
         password.snp.makeConstraints { make in
             make.top.equalTo(email.snp.bottom).offset(20)
@@ -121,6 +126,7 @@ final class RegistrationScreenView: UIView {
         countryOfOrigin.placeholder = "Nationality"
         countryOfOrigin.backgroundColor = .clear
         countryOfOrigin.borderStyle = .roundedRect
+        countryOfOrigin.delegate = self
         countryOfOrigin.textColor = UIColor(named: "SubtitleColor")
         countryOfOrigin.snp.makeConstraints { make in
             make.top.equalTo(password.snp.bottom).offset(20)
@@ -135,6 +141,7 @@ final class RegistrationScreenView: UIView {
         cityOfResidence.placeholder = "City Of Residence"
         cityOfResidence.backgroundColor = .clear
         cityOfResidence.borderStyle = .roundedRect
+        cityOfResidence.delegate = self
         cityOfResidence.textColor = UIColor(named: "SubtitleColor")
         cityOfResidence.snp.makeConstraints { make in
             make.top.equalTo(countryOfOrigin.snp.bottom).offset(20)
@@ -186,7 +193,23 @@ final class RegistrationScreenView: UIView {
             make.height.equalTo(50)
         }
     }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    @objc private func dismissKeyboard() {
+        endEditing(true)
+    }
+
+    private func addTapGestureToDismissKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        addGestureRecognizer(tapGesture)
+    }
+
 }
+
 
 extension RegistrationScreenView: UITextFieldDelegate {
     func configureSignUpForm() -> UserRegistrationData? {
