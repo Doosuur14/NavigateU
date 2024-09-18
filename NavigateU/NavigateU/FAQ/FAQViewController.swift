@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol FAQModuleProtocol: AnyObject {
+    var faqView: FAQView? { get set }
+    var viewModel: FAQViewModel { get set }
+}
+
 class FAQViewController: UIViewController, UITableViewDataSource,
-                         UITableViewDelegate {
+                         UITableViewDelegate, FAQModuleProtocol {
     var faqView: FAQView?
-    let viewModel: FAQViewModel
+    var viewModel: FAQViewModel
 
     init(faqView: FAQView? = nil, viewModel: FAQViewModel) {
         self.faqView = faqView

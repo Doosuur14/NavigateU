@@ -67,9 +67,11 @@ class LikedArticleView: UIView {
             make.centerY.equalToSuperview()
         }
     }
+
     func setupDataSource(with dataSource: UITableViewDataSource) {
         self.tableView.dataSource = dataSource
     }
+    
     func setupDelegate(with delegate: UITableViewDelegate) {
         self.tableView.delegate = delegate
     }

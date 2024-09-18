@@ -34,7 +34,7 @@ class AppCoordinator: Coordinator {
 private extension AppCoordinator {
     func showMainFlow() {
         flowCoordinator = MainFlowCoordinator(
-            navigationController: navigationController, mainFlowCoordinatorProtocol: self)
+            navigationController: navigationController, mainFlowCoordinatorOutput: self)
         flowCoordinator?.start()
     }
 

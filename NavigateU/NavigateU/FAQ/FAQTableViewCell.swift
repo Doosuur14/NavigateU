@@ -21,7 +21,7 @@ class FAQTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-     func configureCell(with question: Question) {
+    func configureCell(with question: Question) {
         contentTitle.text = question.title
         contentDescription.text = question.answer
     }
@@ -36,6 +36,7 @@ class FAQTableViewCell: UITableViewCell {
             make.height.equalTo(25)
         }
     }
+
     private func setupContentDescription() {
         addSubview(contentDescription)
         contentDescription.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -50,11 +51,11 @@ class FAQTableViewCell: UITableViewCell {
             make.bottom.equalToSuperview().inset(16)
         }
     }
+
     private func setUpfunc() {
         setupContentTitle()
         setupContentDescription()
     }
-
 }
 
 extension UITableViewCell {

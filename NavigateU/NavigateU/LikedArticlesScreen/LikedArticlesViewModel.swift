@@ -63,16 +63,16 @@ final class LikedArticlesViewModel {
     }
 
     private func setupBindings() {
-            documentLocalDataSource.articleLikedPublisher
-                .sink { [weak self] _ in
-                    self?.fetchLikedArticles()
-                }
-                .store(in: &cancellables)
+        documentLocalDataSource.articleLikedPublisher
+            .sink { [weak self] _ in
+                self?.fetchLikedArticles()
+            }
+            .store(in: &cancellables)
 
-            documentLocalDataSource.articleUnlikedPublisher
-                .sink { [weak self] _ in
-                    self?.fetchLikedArticles()
-                }
-                .store(in: &cancellables)
-        }
+        documentLocalDataSource.articleUnlikedPublisher
+            .sink { [weak self] _ in
+                self?.fetchLikedArticles()
+            }
+            .store(in: &cancellables)
+    }
 }

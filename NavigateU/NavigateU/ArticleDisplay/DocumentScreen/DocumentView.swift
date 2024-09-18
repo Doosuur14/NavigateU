@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Cosmos
 
 protocol LikeButtonDelegate: AnyObject {
     func didtapLikeButton()
