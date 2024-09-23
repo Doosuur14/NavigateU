@@ -13,13 +13,16 @@ import CoreData
 
 class ProfileViewModel {
 
-    @Published var firstName: String?
-    @Published var lastName: String?
-    @Published var email: String?
-    @Published var password: String?
-    @Published var cityOfResidence: String?
-    @Published var nationality: String?
+    @Published var profile: UserProfile?
+
+//    @Published var firstName: String?
+//    @Published var lastName: String?
+//    @Published var email: String?
+//    @Published var password: String?
+//    @Published var cityOfResidence: String?
+//    @Published var nationality: String?
     @Published var profileImage: UIImage?
+    
     var onProfileUpdated: (() -> Void)?
     private var context: NSManagedObjectContext {
         return CoreDataManager.shared.persistentContainer.viewContext
@@ -56,9 +59,12 @@ class ProfileViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let (userProfile)):
-                firstName = userProfile.firstName
-                lastName = userProfile.lastName
-                email = userProfile.email
+                self.profile = UserProfile(firstName: userProfile.firstName,
+                                           lastName: userProfile.lastName,
+                                           email: userProfile.email,
+                                           nationality: userProfile.nationality,
+                                           cityOfResidence: userProfile.cityOfResidence,
+                                           profileImageURL: userProfile.profileImageURL)
                 if let urlString = userProfile.profileImageURL {
                     self.loadProfilePicture(urlString)
                 } else {
@@ -86,7 +92,6 @@ class ProfileViewModel {
                 self.updateUserProfileImageURL(urlString, for: currentUser)
                 completion(.success(urlString))
             case .failure(let error):
-                print("Failed to upload profile photo")
                 completion(.failure(error))
             }
         }

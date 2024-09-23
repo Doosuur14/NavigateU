@@ -47,7 +47,7 @@ final class LoginViewController<ViewModel: LoginMainViewModelProtocol>: UIViewCo
         case .loading:
             print("loading state")
         case .isloggedSuccessfully:
-            print("login successful, transitioning to main flow")
+            AlertManager.shared.showLoginAlert(viewCon: self)
         case .loginFailed:
             AlertManager.shared.showLoginErrorAlert(viewCon: self)
         }

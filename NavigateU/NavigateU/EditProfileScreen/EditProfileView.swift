@@ -25,8 +25,10 @@ class EditProfileView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-       setupFunc()
+        setupFunc()
+        addTapGestureToDismissKeyboard()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -145,6 +147,20 @@ class EditProfileView: UIView {
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
         }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    @objc private func dismissKeyboard() {
+        endEditing(true)
+    }
+
+    private func addTapGestureToDismissKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        addGestureRecognizer(tapGesture)
     }
 
 }

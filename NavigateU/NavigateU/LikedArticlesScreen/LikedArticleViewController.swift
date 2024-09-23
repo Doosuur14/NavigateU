@@ -16,6 +16,7 @@ protocol LikedArticleProtocol: AnyObject {
 class LikedArticleViewController: UIViewController, UITableViewDataSource,
                                   UITableViewDelegate, LikedarticleViewDelegate, LikedArticleProtocol {
 
+
     var likedArticleView: LikedArticleView?
     let viewModel: LikedArticlesViewModel
 
@@ -41,6 +42,7 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
         self.likedArticleView?.tableView.reloadData()
         self.updateNoResultsLabel()
     }
+    
 
     private func setupView() {
         likedArticleView = LikedArticleView(frame: view.bounds)
@@ -48,7 +50,7 @@ class LikedArticleViewController: UIViewController, UITableViewDataSource,
         likedArticleView?.delegate = self
         likedArticleView?.setupDelegate(with: self)
         likedArticleView?.setupDataSource(with: self)
-        likedArticleView?.tableView.separatorStyle = .none
+        likedArticleView?.tableView.separatorStyle = .singleLine
         likedArticleView?.tableView.register(LikedArticleCell.self,
                                              forCellReuseIdentifier: LikedArticleCell.LikedArticleReuseIdentifier)
         view.backgroundColor = .systemBackground

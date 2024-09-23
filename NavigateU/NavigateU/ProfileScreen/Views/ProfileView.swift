@@ -28,8 +28,8 @@ final class ProfileView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-
     }
+
     private func setupViews() {
         setupAvatarImage()
         setupFirstname()
@@ -122,7 +122,6 @@ final class ProfileView: UIView {
         logOut.setTitleColor(.white, for: .normal)
         logOut.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
         let action = UIAction { [weak self] _ in
-            print("Logout button pressed")
             self?.delegate?.didPressLogoutButton()
         }
         logOut.addAction(action, for: .touchUpInside)
@@ -143,7 +142,6 @@ final class ProfileView: UIView {
         deleteAccount.setTitleColor(.white, for: .normal)
         deleteAccount.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .light)
         let action = UIAction { [weak self] _ in
-            print("Delete button pressed")
             self?.delegate?.didPressDeleteButton()
         }
         deleteAccount.addAction(action, for: .touchUpInside)
@@ -176,6 +174,7 @@ final class ProfileView: UIView {
     func setupDataSource(with dataSource: UITableViewDataSource) {
         self.tableView.dataSource = dataSource
     }
+    
     func setupDelegate(with delegate: UITableViewDelegate) {
         self.tableView.delegate = delegate
     }

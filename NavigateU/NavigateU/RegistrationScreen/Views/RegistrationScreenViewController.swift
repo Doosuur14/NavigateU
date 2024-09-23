@@ -49,7 +49,7 @@ class RegistrationScreenViewController<ViewModel:
         case.initial:
             print("Application is running")
         case.isregisteredSuccessfully:
-            print("registration was successful")
+            AlertManager.shared.showRegistrationSuccessful(viewCon: self)
         case .registrationFailed:
             AlertManager.shared.showRegistrationFailedAlert(viewCon: self)
             break

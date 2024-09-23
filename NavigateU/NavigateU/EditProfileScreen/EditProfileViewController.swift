@@ -50,49 +50,19 @@ class EditProfileViewController: UIViewController, EditProfileDelegate, EditProf
     }
 
     private func bindViewModel() {
-        viewModel.$firstName
-            .receive(on: DispatchQueue.main )
-            .sink { [weak self] newValue in
-                self?.editProfileView?.firstName.text = newValue
-            }
-            .store(in: &cancellables)
-        viewModel.$lastName
+        viewModel.$profile
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                self?.editProfileView?.lastName.text = newValue
-            }
-            .store(in: &cancellables)
-
-        viewModel.$email
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                self?.editProfileView?.email.text = newValue
-            }
-            .store(in: &cancellables)
-
-        viewModel.$password
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                self?.editProfileView?.password.text = newValue
-            }
-            .store(in: &cancellables)
-
-        viewModel.$cityOfResidence
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                self?.editProfileView?.cityOfResidence.text = newValue
-            }
-            .store(in: &cancellables)
-
-        viewModel.$nationality
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                self?.editProfileView?.countryOfOrigin.text = newValue
+            .sink { [weak self] userProfile in
+                self?.editProfileView?.firstName.text = userProfile?.firstName
+                self?.editProfileView?.lastName.text = userProfile?.lastName
+                self?.editProfileView?.email.text = userProfile?.email
+                self?.editProfileView?.password.text = userProfile?.password
+                self?.editProfileView?.countryOfOrigin.text = userProfile?.nationality
+                self?.editProfileView?.cityOfResidence.text = userProfile?.cityOfResidence
             }
             .store(in: &cancellables)
     }
     
-
     func didTapSaveButton() {
 
         guard let form = editProfileView?.configureForm() else {

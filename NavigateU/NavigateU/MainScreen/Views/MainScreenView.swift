@@ -28,7 +28,7 @@ final class MainScreenView: UIView, UIGestureRecognizerDelegate {
         addSubview(searchBar)
         searchBar.placeholder = "Search"
         searchBar.searchBarStyle = .minimal
-        searchBar.showsCancelButton = false
+        searchBar.showsCancelButton = true
         searchBar.backgroundColor = .clear
         searchBar.becomeFirstResponder()
         searchBar.snp.makeConstraints { make in

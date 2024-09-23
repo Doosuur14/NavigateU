@@ -22,7 +22,7 @@ final class LikedArticlesViewModel {
     }
 
     func heightForRowAt() -> Int {
-        return 700
+        return 800
     }
 
     func numberOfRowsInSection() -> Int {
@@ -41,7 +41,6 @@ final class LikedArticlesViewModel {
     func fetchLikedArticles() {
         let fetchedArticles = documentLocalDataSource.getLikedArticles()
         self.likedArticles = fetchedArticles
-        print("Fetched Liked Articles: \(fetchedArticles.count)")
     }
 
     func sortArticlesByLikes() {
