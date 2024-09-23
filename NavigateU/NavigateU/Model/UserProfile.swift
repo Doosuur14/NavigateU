@@ -11,7 +11,7 @@ struct UserProfile {
     let firstName: String?
     let lastName: String?
     let email: String?
-    let password: String?
+    var password: String?
     let nationality: String?
     let cityOfResidence: String?
     let profileImageURL: String?

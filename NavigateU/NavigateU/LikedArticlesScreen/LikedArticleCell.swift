@@ -7,12 +7,14 @@
 
 import UIKit
 
-final class LikedArticleCell: UITableViewCell {
+ class LikedArticleCell: UITableViewCell {
     
     private lazy var contentImage: UIImageView = UIImageView()
     private lazy var contentTitle: UILabel = UILabel()
     private lazy var contentDescription: UITextView = UITextView()
-    
+    lazy var likeButton: UIButton = UIButton()
+    lazy var likeCount: UILabel = UILabel()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpfunc()
@@ -27,11 +29,9 @@ final class LikedArticleCell: UITableViewCell {
             URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
                 guard let self = self else { return }
                 if let error = error {
-                    print("Error loading image: \(error)")
                     return
                 }
                 guard let data = data else {
-                    print("No image data available")
                     return
                 }
                 DispatchQueue.main.async {
@@ -41,7 +41,8 @@ final class LikedArticleCell: UITableViewCell {
         }
         contentTitle.text = article.title
         contentDescription.text = article.content
-        
+        likeCount.text = article.likes
+
     }
     
     private func setupContentImage() {
@@ -76,14 +77,36 @@ final class LikedArticleCell: UITableViewCell {
             make.leading.equalTo(16)
             make.top.equalTo(contentTitle.snp.bottom).offset(3)
             make.trailing.equalTo(-16)
-            make.bottom.equalToSuperview().inset(16)
         }
     }
-    
+
+    private func setupLikeButton() {
+        addSubview(likeButton)
+        likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+        likeButton.tintColor = UIColor(named: "CustomColor")
+        likeButton.snp.makeConstraints { make in
+            make.top.equalTo(contentDescription.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(16)
+            make.width.equalTo(40)
+        }
+    }
+
+    private func setupLikeCount() {
+        addSubview(likeCount)
+        likeCount.textColor = .label
+        likeCount.font = .systemFont(ofSize: 17, weight: .medium)
+        likeCount.snp.makeConstraints { make in
+            make.top.equalTo(contentDescription.snp.bottom).offset(10)
+            make.leading.equalTo(likeButton.snp.trailing).offset(3)
+        }
+    }
+
     private func setUpfunc() {
         setupContentImage()
         setupContentTitle()
         setupContentDescription()
+        setupLikeButton()
+        setupLikeCount()
     }
 }
 

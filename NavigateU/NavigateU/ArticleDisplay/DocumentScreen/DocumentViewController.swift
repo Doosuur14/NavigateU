@@ -28,7 +28,6 @@ class DocumentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        documentLocalDataSource.removeDuplicateArticles()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,11 +36,10 @@ class DocumentViewController: UIViewController {
     }
 
     private func loadArticleData() {
-        if let updatedArticle = documentLocalDataSource.getArticle(articleId: Int(article.id)) {
+         if let updatedArticle = documentLocalDataSource.getArticle(articleId: Int(article.id)) {
            self.article = updatedArticle
         }
         self.isLiked = documentLocalDataSource.isArticleLiked(articleId: Int(article.id))
-        print("Load Article Data: \(article.id), isLiked: \(isLiked)")
         updateLikeButton()
     }
 
@@ -56,7 +54,7 @@ class DocumentViewController: UIViewController {
                     guard let self = self else { return }
                     switch result {
                     case .success(let data):
-                        self.document?.image.image = UIImage(data: data) ?? UIImage(systemName: "person")
+                        self.document?.image.image = data
                     case .failure(let error):
                         print("Error loading image: \(error)")
                         self.document?.image.image = UIImage(systemName: "person")
@@ -90,9 +88,8 @@ extension DocumentViewController: LikeButtonDelegate {
                 case .success:
                     self?.isLiked = false
                     self?.updateLikeButton()
-                    print("Successfully unliked article")
-                case .failure(let error):
-                    print("Failed to unlike article: \(error.localizedDescription)")
+                case .failure:
+                    AlertManager.shared.showNoNetworkError(viewCon: self ?? UIViewController())
                 }
             }
         } else {
@@ -101,9 +98,8 @@ extension DocumentViewController: LikeButtonDelegate {
                 case .success:
                     self?.isLiked = true
                     self?.updateLikeButton()
-                    print("Successfully liked article")
-                case .failure(let error):
-                    print("Failed to like article: \(error.localizedDescription)")
+                case .failure:
+                    AlertManager.shared.showNoNetworkError(viewCon: self ?? UIViewController())
                 }
             }
         }

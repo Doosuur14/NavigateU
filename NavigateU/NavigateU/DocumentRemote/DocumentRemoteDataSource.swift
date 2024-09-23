@@ -10,7 +10,7 @@ import Alamofire
 import CoreData
 
 protocol DocumentRemoteDataSourceProtocol {
-    func fetchArticles(completion: @escaping (Result<[ArticleResponse], Error>) -> Void)
+   // func fetchArticles(completion: @escaping (Result<[ArticleResponse], Error>) -> Void)
     func fetchArticleDetails(articleId: Int, completion: @escaping (Result<ArticleResponse, Error>) -> Void)
     func saveArticlesToCoreData(articleResponses: [ArticleResponse], completion: @escaping (Result<[Article], Error>) -> Void) async
     func saveArticleDetailToCoreData(articleResponse: ArticleResponse, completion: @escaping (Result<Article, Error>) -> Void) async
@@ -23,26 +23,25 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
 
     private var articles: [ArticleResponse] = []
 
-    func fetchArticles(completion: @escaping (Result<[ArticleResponse], any Error>) -> Void) {
-        AF.request("http://172.20.10.3:8080/articles").responseDecodable(of: [ArticleResponse].self) { response in
-            switch response.result {
-            case .success(let articles):
-                completion(.success(articles))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
+//    func fetchArticles(completion: @escaping (Result<[ArticleResponse], any Error>) -> Void) {
+//        AF.request("http://172.20.10.3:8080/articles").responseDecodable(of: [ArticleResponse].self) { response in
+//            switch response.result {
+//            case .success(let articles):
+//                completion(.success(articles))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
 
     func fetchArticleDetails(articleId: Int, completion: @escaping (Result<ArticleResponse, any Error>) -> Void) {
-     //   let urlString = "http://localhost:8080/articles/\(articleId)"
-        let urlString = "http://172.20.10.3:8080/articles/\(articleId)"
+        let baseURL = "https://zo74e.wiremockapi.cloud"
+        let urlString = "\(baseURL)/articles/\(articleId)"
         AF.request(urlString).responseDecodable(of: ArticleResponse.self) { response in
             switch response.result {
             case .success(let article):
                 completion(.success(article))
             case .failure(let error):
-                print("Error fetching article details: \(error)")
                 completion(.failure(error))
             }
         }
@@ -93,23 +92,28 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
     }
 
     func fetchContent(completion: @escaping (Result<[ContentResponse], any Error>) -> Void) {
-        AF.request("http://172.20.10.3:8080/contents").responseDecodable(of: [ContentResponse].self) { response in
+        let baseURL = "https://l3rye.wiremockapi.cloud"
+        let urlString = "\(baseURL)/contents"
+        AF.request(urlString).responseDecodable(of: [ContentResponse].self) { response in
             switch response.result {
             case .success(let content):
                 completion(.success(content))
             case .failure(let error):
+                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                    }
                 completion(.failure(error))
             }
         }
     }
 
     func fetchQuestions(completion: @escaping (Result<[QuestionResponse], any Error>) -> Void) {
-        AF.request("http://172.20.10.3:8080/questions").responseDecodable(of: [QuestionResponse].self) { response in
+        let baseURL = "https://l3rye.wiremockapi.cloud"
+        let urlString = "\(baseURL)/questions"
+        AF.request(urlString).responseDecodable(of: [QuestionResponse].self) { response in
             switch response.result {
             case .success(let question):
                 completion(.success(question))
             case .failure(let error):
-                print("Error fetching questions: \(error)")
                 completion(.failure(error))
             }
         }

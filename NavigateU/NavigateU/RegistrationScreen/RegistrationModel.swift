@@ -48,11 +48,9 @@ final class RegistrationModel: RegistrationViewModelProtocol {
                                             cityOfResidence: cityOfResidence) { [weak self] result in
                     switch result {
                     case .success:
-                        print("User was registered successfully")
                         self?.state = .isregisteredSuccessfully
                         self?.delegate?.signedUpUser()
                     case .failure:
-                        print("There was a problem while registering the user")
                         self?.state = .registrationFailed
                     }
                 }

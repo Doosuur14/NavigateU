@@ -52,23 +52,12 @@ final class ProfileViewController: UIViewController, UITableViewDelegate, UITabl
 
 
     private func setupBindings() {
-        viewModel.$firstName
-            .receive(on: DispatchQueue.main )
-            .sink { [weak self] newValue in
-                self?.profileView?.firstName.text = newValue
-            }
-            .store(in: &cancellables)
-        viewModel.$lastName
+        viewModel.$profile
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                self?.profileView?.lastName.text = newValue
-            }
-            .store(in: &cancellables)
-
-        viewModel.$email
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                self?.profileView?.userEmail.text = newValue
+            .sink { [weak self] userProfile in
+                self?.profileView?.firstName.text = userProfile?.firstName
+                self?.profileView?.lastName.text = userProfile?.lastName
+                self?.profileView?.userEmail.text = userProfile?.email
             }
             .store(in: &cancellables)
         viewModel.$profileImage
@@ -96,6 +85,7 @@ final class ProfileViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
         switch (indexPath.section, indexPath.row) {
         case (0, 0):
@@ -173,15 +163,18 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
     private func uploadSelectedImage(_ image: UIImage) {
         if let imageData = image.jpegData(compressionQuality: 1.0), imageData.count > 5 * 1024 * 1024 {
-            print("Image is too large.")
             return
         }
         viewModel.uploadProfilePhoto(image) { result in
             switch result {
             case .success(let urlString):
-                print("Successfully uploaded image. URL: \(urlString)")
+                let alert = UIAlertController(title: "Upload Sucessful", message: "Image upload was successful", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true)
             case .failure(let error):
-                print("Failed to upload image with error: \(error)")
+                let alert = UIAlertController(title: "Upload Failed", message: "Image upload was not successful", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true)
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "Upload Failed", message: "Please check your internet connection and try again.", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

@@ -16,7 +16,6 @@ protocol DocumentLocalDataSourceProtocol {
     func getLikedArticles() -> [Article]
     func isArticleLiked(articleId: Int) -> Bool
     func getArticle(articleId: Int) -> Article?
-    func removeDuplicateArticles()
 
     var articleLiked: Bool { get set }
     var articleLikedPublisher: Published<Bool>.Publisher { get }
@@ -24,6 +23,7 @@ protocol DocumentLocalDataSourceProtocol {
 }
 
 class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
+    
     static let shared = DocumentLocalDataSource()
     @Published var articleLiked: Bool = false
 
@@ -36,7 +36,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
 
     func getLikedArticles() -> [Article] {
         guard let currentUser = Auth.auth().currentUser?.uid else {
-            print("no user found")
             return []
         }
         let managedObjectContext = context
@@ -60,7 +59,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
 
     func isArticleLiked(articleId: Int) -> Bool {
         guard let currentUser = Auth.auth().currentUser?.uid else {
-            print("no user found")
             return false
         }
 
@@ -94,7 +92,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
 
     func likeArticle(article: Article, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser?.uid else {
-            print("no user found")
             return
         }
 
@@ -116,7 +113,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
                         self.articleLiked = true
                         completion(.success(()))
                     } else {
-                        print("Article already liked.")
                         self.articleLiked = false
                         completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Article already liked"])))
                     }
@@ -131,7 +127,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
 
     func unlikeArticle(article: Article, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser?.uid else {
-            print("no user found")
             return
         }
 
@@ -157,37 +152,6 @@ class DocumentLocalDataSource: DocumentLocalDataSourceProtocol {
                 }
             } catch {
                 completion(.failure(error))
-            }
-        }
-    }
-
-
-    func removeDuplicateArticles() {
-        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-
-        context.perform {
-            do {
-                let users = try self.context.fetch(fetchRequest)
-                if let user = users.first {
-                    if let likedArticles = user.likedArticles as? Set<Article> {
-                        let articleIDs = likedArticles.map { $0.id }
-                        let uniqueArticleIDs = Set(articleIDs)
-
-                        for articleID in uniqueArticleIDs {
-                            let duplicates = likedArticles.filter { $0.id == articleID }
-                            if duplicates.count > 1 {
-                                for duplicate in duplicates.dropFirst() {
-                                    user.removeFromLikedArticles(duplicate)
-                                    self.context.delete(duplicate)
-                                }
-                            }
-                        }
-                        try self.context.save()
-                        print("Removed duplicates from liked articles.")
-                    }
-                }
-            } catch {
-                print("Failed to remove duplicates: \(error)")
             }
         }
     }
