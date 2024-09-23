@@ -24,7 +24,7 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
     private var articles: [ArticleResponse] = []
 
     func fetchArticles(completion: @escaping (Result<[ArticleResponse], any Error>) -> Void) {
-        AF.request("http://localhost:8080/articles").responseDecodable(of: [ArticleResponse].self) { response in
+        AF.request("http://172.20.10.3:8080/articles").responseDecodable(of: [ArticleResponse].self) { response in
             switch response.result {
             case .success(let articles):
                 completion(.success(articles))
@@ -35,7 +35,8 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
     }
 
     func fetchArticleDetails(articleId: Int, completion: @escaping (Result<ArticleResponse, any Error>) -> Void) {
-        let urlString = "http://localhost:8080/articles/\(articleId)"
+     //   let urlString = "http://localhost:8080/articles/\(articleId)"
+        let urlString = "http://172.20.10.3:8080/articles/\(articleId)"
         AF.request(urlString).responseDecodable(of: ArticleResponse.self) { response in
             switch response.result {
             case .success(let article):
@@ -92,7 +93,7 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
     }
 
     func fetchContent(completion: @escaping (Result<[ContentResponse], any Error>) -> Void) {
-        AF.request("http://localhost:8080/contents").responseDecodable(of: [ContentResponse].self) { response in
+        AF.request("http://172.20.10.3:8080/contents").responseDecodable(of: [ContentResponse].self) { response in
             switch response.result {
             case .success(let content):
                 completion(.success(content))
@@ -103,11 +104,12 @@ class DocumentRemoteDataSource: DocumentRemoteDataSourceProtocol {
     }
 
     func fetchQuestions(completion: @escaping (Result<[QuestionResponse], any Error>) -> Void) {
-        AF.request("http://localhost:8080/questions").responseDecodable(of: [QuestionResponse].self) { response in
+        AF.request("http://172.20.10.3:8080/questions").responseDecodable(of: [QuestionResponse].self) { response in
             switch response.result {
             case .success(let question):
                 completion(.success(question))
             case .failure(let error):
+                print("Error fetching questions: \(error)")
                 completion(.failure(error))
             }
         }

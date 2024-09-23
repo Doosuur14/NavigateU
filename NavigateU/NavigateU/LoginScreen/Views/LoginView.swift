@@ -51,6 +51,7 @@ final class LoginView: UIView {
         setupGoogleImage()
         setupTerms()
         setupConditions()
+        addTapGestureToDismissKeyboard()
     }
 
     private func setupAppName() {
@@ -182,6 +183,20 @@ final class LoginView: UIView {
             make.edges.equalTo(continueWithGoogle).inset(15)
             make.leading.equalToSuperview().offset(-200)
         }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    @objc private func dismissKeyboard() {
+        endEditing(true)
+    }
+
+    private func addTapGestureToDismissKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        addGestureRecognizer(tapGesture)
     }
 }
 

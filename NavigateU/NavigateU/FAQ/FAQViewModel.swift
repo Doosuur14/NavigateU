@@ -41,7 +41,6 @@ class FAQViewModel {
             case .success(let questionResponses):
                 self?.content = questionResponses.map { question in
                     Question(title: question.title, answer: question.answer)
-
                 }
                 DispatchQueue.main.async {
                     self?.reloadTableView?()

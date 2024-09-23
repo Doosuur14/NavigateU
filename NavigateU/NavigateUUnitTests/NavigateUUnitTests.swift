@@ -16,8 +16,8 @@ final class NavigateUUnitTests: XCTestCase {
     private var cancellables: Set<AnyCancellable> = []
 
     func test_user_login_success() {
-        let email = "jj12@gmail.com"
-        let password = "140503"
+        let email = "doosuur14@gmail.com"
+        let password = "123456"
 
         let expectation = self.expectation(description: "Login successful")
 

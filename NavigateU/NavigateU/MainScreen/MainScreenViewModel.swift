@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class MainScreenViewModel {
-    private var content: [Content] = []
+    var content: [Content] = []
     var filteredContent: [Content] = []
     var documentRemoteDataSource: DocumentRemoteDataSourceProtocol
     var reloadTableView: (() -> Void)?

@@ -54,48 +54,40 @@ final class MainScreenViewController: UIViewController, UITableViewDataSource,
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mainView?.searchBar.resignFirstResponder()
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         let selectedContent = viewModel.filteredContent[indexPath.row]
         let articleId = selectedContent.id
-        remoteDataSource.fetchArticleDetails(articleId: articleId) { [weak self] result in
-            switch result {
-            case .success(let articleResponse):
-                DispatchQueue.main.async {
-                    let context = CoreDataManager.shared.persistentContainer.viewContext
-                    let articleFetchRequest: NSFetchRequest<Article> = Article.fetchRequest()
-                    articleFetchRequest.predicate = NSPredicate(format: "id == %d", articleResponse.id)
 
-                    if let existingArticles = try? context.fetch(articleFetchRequest),
-                       let existingArticle = existingArticles.first {
-                        existingArticle.update(with: articleResponse)
-                    } else {
-                        _ = Article(articleResponse: articleResponse, context: context)
-                    }
-                    try? context.save()
-                    let article = Article(articleResponse: articleResponse, context: context)
-                    let documentVC = DocumentViewController(article: article)
-                    self?.navigationController?.pushViewController(documentVC, animated: true)
-                }
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let articleFetchRequest: NSFetchRequest<Article> = Article.fetchRequest()
+        articleFetchRequest.predicate = NSPredicate(format: "id == %d", articleId)
 
-            case .failure(let error):
-                print("Error fetching article details for specific section: \(error)")
-                DispatchQueue.main.async {
-                    let context = CoreDataManager.shared.persistentContainer.viewContext
-                    let articleFetchRequest: NSFetchRequest<Article> = Article.fetchRequest()
-                    articleFetchRequest.predicate = NSPredicate(format: "id == %d", articleId)
-
-                    if let existingArticles = try? context.fetch(articleFetchRequest),
-                       let existingArticle = existingArticles.first {
-                        let documentVC = DocumentViewController(article: existingArticle)
-                        self?.navigationController?.pushViewController(documentVC, animated: true)
-                    } else {
-                        print("No local data available for article id: \(articleId)")
+        do {
+            let existingArticles = try context.fetch(articleFetchRequest)
+            if let existingArticle = existingArticles.first {
+                let documentVC = DocumentViewController(article: existingArticle)
+                self.navigationController?.pushViewController(documentVC, animated: true)
+            } else {
+                remoteDataSource.fetchArticleDetails(articleId: articleId) { [weak self] result in
+                    switch result {
+                    case .success(let articleResponse):
+                        DispatchQueue.main.async {
+                            _ = Article(articleResponse: articleResponse, context: context)
+                            try? context.save()
+                            let newArticle = Article(articleResponse: articleResponse, context: context)
+                            let documentVC = DocumentViewController(article: newArticle)
+                            self?.navigationController?.pushViewController(documentVC, animated: true)
+                        }
+                    case .failure(let error):
+                        print("Error fetching article details for specific section: \(error)")
                     }
                 }
             }
+        } catch {
+            print("Error fetching articles from Core Data: \(error)")
         }
     }
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         CGFloat(viewModel.heightForRowAt())
     }
@@ -104,10 +96,19 @@ final class MainScreenViewController: UIViewController, UITableViewDataSource,
         viewModel.searchPost(searchText)
     }
 
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("Search button tapped")
+        mainView?.searchBar.resignFirstResponder()
+    }
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("Cancel button tapped")
+        mainView?.searchBar.resignFirstResponder()
         viewModel.cancelButtonClicked()
     }
-    
+
+
     private func updateNoResultsLabel() {
         mainView?.label.isHidden = viewModel.numberOfRowsInSection() != 0
     }

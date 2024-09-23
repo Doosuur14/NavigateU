@@ -28,6 +28,11 @@ class FAQViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        viewModel.reloadTableView = { [weak self] in
+            DispatchQueue.main.async {
+                self?.faqView?.tableView.reloadData()
+            }
+        }
 
     }
     private func setupView() {

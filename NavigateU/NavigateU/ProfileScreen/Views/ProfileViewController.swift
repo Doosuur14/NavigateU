@@ -172,6 +172,10 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
 
     private func uploadSelectedImage(_ image: UIImage) {
+        if let imageData = image.jpegData(compressionQuality: 1.0), imageData.count > 5 * 1024 * 1024 {
+            print("Image is too large.")
+            return
+        }
         viewModel.uploadProfilePhoto(image) { result in
             switch result {
             case .success(let urlString):

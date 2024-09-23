@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MainScreenView: UIView {
+final class MainScreenView: UIView, UIGestureRecognizerDelegate {
 
     lazy var searchBar: UISearchBar = UISearchBar()
     lazy var tableView: UITableView = UITableView()

@@ -38,19 +38,10 @@ final class LikedArticlesViewModel {
         return cell
     }
 
-    func resolveFaults(for articles: [Article]) -> [Article] {
-        return articles.map { article in
-            _ = article.title
-            _ = article.imageURL
-            _ = article.content
-            return article
-        }
-    }
-
     func fetchLikedArticles() {
-        var fetchedArticles = documentLocalDataSource.getLikedArticles()
-        fetchedArticles = resolveFaults(for: fetchedArticles)
+        let fetchedArticles = documentLocalDataSource.getLikedArticles()
         self.likedArticles = fetchedArticles
+        print("Fetched Liked Articles: \(fetchedArticles.count)")
     }
 
     func sortArticlesByLikes() {

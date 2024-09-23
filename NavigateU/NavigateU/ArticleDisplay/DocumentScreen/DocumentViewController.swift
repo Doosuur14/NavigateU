@@ -12,6 +12,7 @@ class DocumentViewController: UIViewController {
     private let documentLocalDataSource: any DocumentLocalDataSourceProtocol
     var document: DocumentView?
 
+
     private var isLiked: Bool = false
 
     init(article: Article, dataSource: any DocumentLocalDataSourceProtocol = DocumentLocalDataSource.shared) {
@@ -89,6 +90,7 @@ extension DocumentViewController: LikeButtonDelegate {
                 case .success:
                     self?.isLiked = false
                     self?.updateLikeButton()
+                    print("Successfully unliked article")
                 case .failure(let error):
                     print("Failed to unlike article: \(error.localizedDescription)")
                 }
@@ -99,6 +101,7 @@ extension DocumentViewController: LikeButtonDelegate {
                 case .success:
                     self?.isLiked = true
                     self?.updateLikeButton()
+                    print("Successfully liked article")
                 case .failure(let error):
                     print("Failed to like article: \(error.localizedDescription)")
                 }
