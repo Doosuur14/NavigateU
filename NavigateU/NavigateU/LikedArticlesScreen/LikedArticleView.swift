@@ -24,6 +24,7 @@ class LikedArticleView: UIView {
         setupButton()
         setupTableView()
         setupLabel()
+        
     }
 
     required init?(coder: NSCoder) {
@@ -33,7 +34,10 @@ class LikedArticleView: UIView {
     private func setupButton() {
         addSubview(sortButton)
         sortButton.setTitle("Sort by Likecount", for: .normal)
-        sortButton.setTitleColor(.custom, for: .normal)
+        sortButton.clipsToBounds = true
+        sortButton.layer.cornerRadius = 10
+        sortButton.backgroundColor = UIColor(named: "CustomColor")
+        sortButton.setTitleColor(.white, for: .normal)
         let action = UIAction { [weak self] _ in
             self?.delegate?.didPressSortButton()
         }
@@ -41,6 +45,7 @@ class LikedArticleView: UIView {
         sortButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
             make.trailing.equalToSuperview().offset(-16)
+            make.width.equalTo(200)
             make.height.equalTo(40)
         }
     }
@@ -67,6 +72,8 @@ class LikedArticleView: UIView {
             make.centerY.equalToSuperview()
         }
     }
+
+    
 
     func setupDataSource(with dataSource: UITableViewDataSource) {
         self.tableView.dataSource = dataSource

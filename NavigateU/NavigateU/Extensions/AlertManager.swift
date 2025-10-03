@@ -34,28 +34,54 @@ extension AlertManager {
         self.showAlert(viewController: viewCon, title: "REGISTRATION WAS NOT SUCCESSFUL",
                        message: "Please review the details for the form")
     }
+    // MARK: Registration successful
     func showRegistrationSuccessful(viewCon: UIViewController) {
         self.showAlert(viewController: viewCon, title: "REGISTRATION WAS SUCCESSFUL!",
                        message: "Welcome.")
     }
+    // MARK: Login failed
     func showLoginErrorAlert(viewCon: UIViewController) {
         self.showAlert(viewController: viewCon, title: "LOGIN FAILED",
                        message: "Please review the login details and try again")
     }
+
+    func showLoginAlert(viewCon: UIViewController) {
+        self.showAlert(viewController: viewCon, title: "Login successful",
+                       message: "Login was successful")
+    }
+
+    // MARK: Empty field
     func showEmptyFieldAlert(viewCon: UIViewController) {
         self.showAlert(viewController: viewCon, title: "Error",
                        message: "You are trying to send an empty field, Please enter text.")
     }
+    // MARK: Wrong email format
     func showWrongEmailAlert(viewCon: UIViewController) {
         self.showAlert(viewController: viewCon, title: "Error",
                        message: "Email format is wrong, Please enter a valid email!")
     }
+    // MARK: Profile was sucessfully updated
     func showUpdateAlert(viewCon: UIViewController) {
         self.showAlert(viewController: viewCon, title: "Success",
                        message: "Profile updated successfully!")
     }
+    // MARK: Update failed
     func showUpdateFailureAlert(viewCon: UIViewController) {
         self.showAlert(viewController: viewCon, title: "FAILED",
                        message: "Update failed!")
+    }
+    // MARK: Error while trying to view full article
+    func showFailureToViewArticleAlert(viewCon: UIViewController) {
+        self.showAlert(viewController: viewCon, title: "FAILED",
+                       message: "Error fetching article details for specific section!")
+    }
+    func showNoDataError(viewCon: UIViewController) {
+        self.showAlert(viewController: viewCon, title: "No Data", message: "No article data available.")
+    }
+    func showNoNetworkError(viewCon: UIViewController) {
+        self.showAlert(viewController: viewCon, title: "Network Failed", message: "Network error. Please check your connection.")
+    }
+    func showUnknownError(viewCon: UIViewController) {
+        self.showAlert(viewController: viewCon, title: "Unknown Error", message: "An unknown error occurred. Please try again.")
     }
 }

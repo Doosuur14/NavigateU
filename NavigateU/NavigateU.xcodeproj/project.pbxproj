@@ -34,6 +34,7 @@
 		DE6902502BC3161100F16DDA /* MainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69024F2BC3161100F16DDA /* MainScreenViewModel.swift */; };
 		DE6902522BC31FC300F16DDA /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6902512BC31FC300F16DDA /* Content.swift */; };
 		DE83F24F2BCC952F005F0A0C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE83F24E2BCC952F005F0A0C /* Profile.swift */; };
+		DE862CB72CA00DDB00A2F16F /* ArticleServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE862CB62CA00DDB00A2F16F /* ArticleServiceError.swift */; };
 		DE8EC0372C8493F70088195C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DE8EC0362C8493F70088195C /* Alamofire */; };
 		DE8EC03C2C8494470088195C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE8EC03B2C8494470088195C /* FirebaseAuth */; };
 		DE8EC03E2C84944F0088195C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = DE8EC03D2C84944F0088195C /* FirebaseDatabase */; };
@@ -161,6 +162,7 @@
 		DE69024F2BC3161100F16DDA /* MainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewModel.swift; sourceTree = "<group>"; };
 		DE6902512BC31FC300F16DDA /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		DE83F24E2BCC952F005F0A0C /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		DE862CB62CA00DDB00A2F16F /* ArticleServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleServiceError.swift; sourceTree = "<group>"; };
 		DE8EC0432C87C31C0088195C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		DE910A392BD1D7EB00B3935E /* MainViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewState.swift; sourceTree = "<group>"; };
 		DE910A3C2BD1DFAE00B3935E /* MainModuleBuider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleBuider.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				DE910A432BD1F00C00B3935E /* EnumError.swift */,
+				DE862CB62CA00DDB00A2F16F /* ArticleServiceError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -915,6 +918,7 @@
 				DEFD8D952C51D711008CD62B /* ProfilePhotoError.swift in Sources */,
 				DEF3570E2BAA117B00FD27EC /* RegistrationScreenView.swift in Sources */,
 				DEF3570B2BA78EFD00FD27EC /* HomeScreenView.swift in Sources */,
+				DE862CB72CA00DDB00A2F16F /* ArticleServiceError.swift in Sources */,
 				DEF357182BACD5F700FD27EC /* MainScreenViewController.swift in Sources */,
 				DED80E112BC941EF00526733 /* ProfileViewController.swift in Sources */,
 				DEFD8D9B2C582AAB008CD62B /* LikedArticleView.swift in Sources */,

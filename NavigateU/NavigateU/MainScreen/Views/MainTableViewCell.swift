@@ -31,7 +31,7 @@ final class MainTableViewCell: UITableViewCell {
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
-                    if let image = UIImage(data: data) {
+                    if let image = data ?? UIImage(named: "person") {
                         if self?.tag == cellTag {
                             self?.contentImage.image = image
                         }

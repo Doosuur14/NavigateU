@@ -10,13 +10,10 @@ import FirebaseFirestore
 import CoreData
 import FirebaseAuth
 
+
 class EditProfileViewModel {
-    @Published var firstName: String?
-    @Published var lastName: String?
-    @Published var email: String?
-    @Published var password: String?
-    @Published var cityOfResidence: String?
-    @Published var nationality: String?
+
+    @Published var profile: UserProfile?
 
     var onProfileDetails: (() -> Void)?
     var onProfileUpdated: (() -> Void)?
@@ -31,12 +28,13 @@ class EditProfileViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let (userProfile)):
-                firstName = userProfile.firstName
-                lastName = userProfile.lastName
-                email = userProfile.email
-                password = userProfile.password
-                cityOfResidence = userProfile.cityOfResidence
-                nationality = userProfile.nationality
+                self.profile = UserProfile(firstName: userProfile.firstName,
+                                           lastName: userProfile.lastName,
+                                           email: userProfile.email,
+                                           password: userProfile.password,
+                                           nationality: userProfile.nationality,
+                                           cityOfResidence: userProfile.cityOfResidence,
+                                           profileImageURL: userProfile.profileImageURL)
                 self.onProfileDetails?()
             case .failure(_):
                 print("Error while fetching user's profile")
@@ -54,31 +52,27 @@ class EditProfileViewModel {
             "nationality": nationality
         ]
         let dispatchGroup = DispatchGroup()
-        if password != self.password {
+        if password != profile?.password {
             dispatchGroup.enter()
             Auth.auth().currentUser?.updatePassword(to: password) { error in
 
                 if let error = error as NSError? {
-                    print("Failure to update password: \(error.localizedDescription)")
+                    let errorMessage: String
                     switch AuthErrorCode(rawValue: error.code) {
                     case .weakPassword:
-                        print("Password is too weak.")
+                        errorMessage = "Password is too weak"
                     default:
-                        print("An unknown error occurred: \(error.localizedDescription)")
+                        errorMessage = "An unknown error occurred while updating the password."
                     }
-                    completion(.failure(error))
+                    completion(.failure(NSError(domain: "", code: error.code, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
                     dispatchGroup.leave()
                     return
                 }
-                print("password successfully updated.")
-                self.password = password
+                self.profile?.password = password
                 dispatchGroup.leave()
-
             }
         }
-
         dispatchGroup.notify(queue: .main) {
-
             let db = Firestore.firestore()
             db.collection("users").document(currentUser).updateData(updatedData) { [weak self] error in
                 if let error = error {
@@ -86,14 +80,21 @@ class EditProfileViewModel {
                     return
                 }
 
-                self?.updateCoreData(firstName: firstName, lastName: lastName, cityOfResidence: cityOfResidence, nationality: nationality)
-                self?.onProfileUpdated?()
-                completion(.success(()))
+                self?.updateCoreData(firstName: firstName, lastName: lastName, cityOfResidence: cityOfResidence, nationality: nationality) { result in
+                    switch result {
+                    case .success:
+                        self?.onProfileUpdated?()
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
             }
         }
     }
 
-    private func updateCoreData(firstName: String, lastName: String, cityOfResidence: String, nationality: String) {
+    private func updateCoreData(firstName: String, lastName: String, cityOfResidence: String, nationality: String, completion: @escaping (Result<Void, Error>) -> Void) {
+
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uid == %@", Auth.auth().currentUser?.uid ?? "")
 
@@ -105,12 +106,12 @@ class EditProfileViewModel {
                 user.cityOfResidence = cityOfResidence
                 user.nationality = nationality
                 try self.context.save()
-                print("Successfully updated user profile in Core Data")
+                completion(.success(()))
             } else {
-                print("User not found in Core Data")
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found in Core Data"])))
             }
         } catch {
-            print("Failed to update user profile in Core Data: \(error)")
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: error])))
         }
     }
 
